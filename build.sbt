@@ -21,7 +21,7 @@ lazy val `fdcluster` = (project in file("."))
 )
 scalacOptions in(Compile, doc) ++= Seq("-verbose", "-Ymacro-annotations")
 
-
+publishTo := Some(Resolver.file("local-ivy", file("path/to/ivy-repo/releases")))
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "4.6.0" % "test",
   "org.specs2" %% "specs2-mock" % "4.6.0" % "test",
