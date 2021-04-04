@@ -10,4 +10,4 @@
 /target
 .gitignore
 .DS_Store
-/project/target
+/project/target/
