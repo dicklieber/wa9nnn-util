@@ -9,3 +9,5 @@
 /httpRequests/
 /target
 .gitignore
+.DS_Store
+/project/target

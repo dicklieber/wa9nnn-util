@@ -8,7 +8,7 @@ scalaVersion := "2.13.5"
 
 //idePackagePrefix := Some("com.wa9nnn.tableui")
 lazy val `fdcluster` = (project in file("."))
-  .enablePlugins( GitPlugin, BuildInfoPlugin, SbtTwirl).settings(
+  .enablePlugins(GitPlugin, BuildInfoPlugin, SbtTwirl).settings(
   buildInfoKeys ++= Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion,
     git.gitCurrentTags, git.gitCurrentBranch, git.gitHeadCommit, git.gitHeadCommitDate, git.baseVersion,
     BuildInfoKey.action("buildTime") {
@@ -20,12 +20,13 @@ lazy val `fdcluster` = (project in file("."))
 )
 scalacOptions in(Compile, doc) ++= Seq("-verbose", "-Ymacro-annotations")
 
-//publishTo := Some(Resolver.file("local-ivy", file("path/to/ivy-repo/releases")))
-//publishTo := Some(MavenCache("local-maven", file("path/to/maven-repo/releases")))
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "4.6.0" % "test",
   "org.specs2" %% "specs2-mock" % "4.6.0" % "test",
 )
 
+publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")
+credentials += Credentials("Artifactory Realm", "wa9nnn.jfrog.io", "Wa9nnn@u505.com", "71Lol+aLane")
 
-//jdkPackager:antPackagerTasks
+publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn;build.timestamp=" + new java.util.Date().getTime)
+credentials += Credentials("Artifactory Realm", "wa9nnn.jfrog.io", "Wa9nnn@u505.com", "71Lol+aLane")
