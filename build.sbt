@@ -26,7 +26,5 @@ libraryDependencies ++= Seq(
 )
 
 publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")
-credentials += Credentials("Artifactory Realm", "wa9nnn.jfrog.io", "Wa9nnn@u505.com", "71Lol+aLane")
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 
-publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn;build.timestamp=" + new java.util.Date().getTime)
-credentials += Credentials("Artifactory Realm", "wa9nnn.jfrog.io", "Wa9nnn@u505.com", "71Lol+aLane")

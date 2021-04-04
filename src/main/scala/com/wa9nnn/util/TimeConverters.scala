@@ -1,15 +1,31 @@
+/*
+ * Copyright (C) @year  Dick Lieber, WA9NNN
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ */
+
 package com.wa9nnn.util
 
-import java.sql
 import java.time.format.DateTimeFormatter
 import java.time.{Duration, Instant, ZoneId, ZonedDateTime}
 import java.util.TimeZone
-
-
 import scala.language.implicitConversions
 
 object TimeConverters {
-   implicit val zoneIdUtc: ZoneId = ZoneId.of("UTC")
+  implicit val zoneIdUtc: ZoneId = ZoneId.of("UTC")
 
   def nanoToSecond(nanoseconds: Double): Double = nanoseconds / 1000000000.0
 
@@ -31,23 +47,6 @@ object TimeConverters {
    * @param sqlTime stupid  java.sql.Time
    * @return the java instant
    */
-  def sqlToInstant(sqlDate: sql.Date, sqlTime: sql.Time): Instant = {
-    // It seems that the3 getTime vale of sql.Time doesn't round-trip through MySQL
-
-    val time: Long = sqlDate.getTime
-    val date: Long = sqlTime.getTime
-    val r = if (time == date) {
-      Instant.ofEpochMilli(date)
-    } else {
-      Instant.ofEpochMilli(date + time)
-    }
-    r
-  }
-
-  def instantToSql(instant: Instant): (sql.Date, sql.Time) = {
-    val milli = instant.toEpochMilli
-    new sql.Date(milli) -> new sql.Time(milli)
-  }
 
   @scala.inline
   implicit def durationToString(duration: Duration): String = {
@@ -60,12 +59,19 @@ object TimeConverters {
     _fileStamp.format(ZonedDateTime.ofInstant(in, ZoneId.of("UTC")))
   }
 
-  def instantDisplayUTCCST(instant: Instant): String = {
-    val sUtc = fmt.format(ZonedDateTime.ofInstant(instant, TimeZone.getTimeZone("UTC").toZoneId))
-    val scst = fmt.format(ZonedDateTime.ofInstant(instant, TimeZone.getTimeZone("CST").toZoneId))
+  /**
+   *
+   * @param instant any time since 1970
+   * @param zoneId what to consider local.
+   * @return
+   */
+  def instantDisplayUTCLocal(instant: Instant, zoneId: ZoneId = TimeZone.getDefault.toZoneId): String = {
+    val sUtc = fmt.format(ZonedDateTime.ofInstant(instant, ZoneId.of("UTC")))
+    val scst = fmt.format(ZonedDateTime.ofInstant(instant, zoneId))
 
     s"$sUtc ($scst)"
   }
+
   def local(instant: Instant): String = {
     fmt.format(ZonedDateTime.ofInstant(instant, TimeZone.getTimeZone("CST").toZoneId))
   }
