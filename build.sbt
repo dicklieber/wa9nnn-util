@@ -26,5 +26,5 @@ libraryDependencies ++= Seq(
 )
 
 publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
+credentials += Credentials(Path.userHome / ".sbt" / "jfrog.credentials")
 
