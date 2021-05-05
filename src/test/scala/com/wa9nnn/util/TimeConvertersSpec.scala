@@ -25,11 +25,11 @@ class TimeConvertersSpec extends Specification {
 
     "UTCLocal" in {
       val s = instantDisplayUTCLocal(fixedInstant, TimeZone.getTimeZone("CST").toZoneId)
-      s must beEqualTo("01/01/70 02:46 UTC (12/31/69 20:46 CST)")
+      s must beEqualTo("01/01/70 02:46 UTC (20:46 CST)")
     }
 
     "fileStamp" >> {
-      fileStamp(fixedInstant) must beEqualTo ("19700101024640UTC")
+      fileStamp(fixedInstant) must beEqualTo ("1970-01-01 024640UTC")
     }
   }
 }

@@ -1,7 +1,5 @@
-import java.awt.{Image, Toolkit}
-
 /*
- * Copyright (C) ${year} Dick Lieber, WA9NNN
+ * Copyright (C) 2021 Dick Lieber, WA9NNN
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +15,18 @@ import java.awt.{Image, Toolkit}
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-object MacOsTest extends App {
+package com.wa9nnn.util.tableui
 
-  import com.apple.eawt.Application
+import org.specs2.mutable.Specification
 
-    try {
-      {
-        println("Hello MacOS")
-        val application: Application = Application.getApplication
-println(application)
-        val image: Image = Toolkit.getDefaultToolkit.getImage(getClass.getResource(imagePath))
-        application.setDockIconImage(image)
-      }
-    } catch {
-      case e: Throwable =>
-        e.printStackTrace()
-//        logger.error("DockIcon (MacOS specific", e)
-    }
+import java.time.Instant
+
+class CellSpec extends Specification {
+
+  "Cell" >> {
+  "creators" >> {
+    Cell("simplestring").value must beEqualTo ("simplestring")
+    Cell(Instant.EPOCH).value must beEqualTo ("01/01/70 00:00 UTC (18:00 CST)")
+  }
+  }
 }
