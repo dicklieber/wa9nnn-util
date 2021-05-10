@@ -29,7 +29,6 @@ object TimeConverters {
 
   def nanoToSecond(nanoseconds: Double): Double = nanoseconds / 1000000000.0
 
-  val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm z")
 
   /**
    * @param in value from instant.toString
@@ -53,27 +52,30 @@ object TimeConverters {
     DurationFormat(duration)
   }
 
-  private val _fileStamp = DateTimeFormatter.ofPattern("YYYMMddHHmmssz")
+  private val _fileStamp = DateTimeFormatter.ofPattern("YYYY-MM-dd HHmmssz")
 
   def fileStamp(in: Instant = Instant.now()): String = {
     _fileStamp.format(ZonedDateTime.ofInstant(in, ZoneId.of("UTC")))
   }
 
+  val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm z")
+  val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm z")
+
   /**
-   *
+   * UTC from [[Instant]] with local time
    * @param instant any time since 1970
    * @param zoneId what to consider local.
    * @return
    */
   def instantDisplayUTCLocal(instant: Instant, zoneId: ZoneId = TimeZone.getDefault.toZoneId): String = {
     val sUtc = fmt.format(ZonedDateTime.ofInstant(instant, ZoneId.of("UTC")))
-    val scst = fmt.format(ZonedDateTime.ofInstant(instant, zoneId))
+    val local = timeFmt.format(ZonedDateTime.ofInstant(instant, zoneId))
 
-    s"$sUtc ($scst)"
+    s"$sUtc ($local)"
   }
 
-  def local(instant: Instant): String = {
-    fmt.format(ZonedDateTime.ofInstant(instant, TimeZone.getTimeZone("CST").toZoneId))
+  implicit def local(instant: Instant): String = {
+    instantDisplayUTCLocal(instant)
   }
 
 }
