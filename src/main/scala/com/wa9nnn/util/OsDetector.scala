@@ -1,5 +1,5 @@
 /*
- * Copyright (C) ${year} Dick Lieber, WA9NNN
+ * Copyright (C) 2021 Dick Lieber, WA9NNN
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,25 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.wa9nnn.util.macos
+package com.wa9nnn.util
 
-import com.apple.eawt.Application
-import com.typesafe.scalalogging.LazyLogging
-import com.wa9nnn.util.OsDetector
 
-object DockIcon extends LazyLogging {
-  def apply(imagePath: String): Unit = {
-    try {
-     if(OsDetector.macos) {
-        val application: Application = Application.getApplication
-        import java.awt.{Image, Toolkit}
+object OsDetector {
+  val osName: String = System.getProperty("os.name").toLowerCase
 
-        val image: Image = Toolkit.getDefaultToolkit.getImage(getClass.getResource(imagePath))
-        application.setDockIconImage(image)
-      }
-    } catch {
-      case e: Throwable =>
-        logger.error("DockIcon (MacOS specific", e)
-    }
-  }
+  val windows:Boolean =  osName  startsWith "windows"
+  val macos:Boolean =  osName startsWith "mac"
+  val linux:Boolean =  osName startsWith "linux" //todo
 }
