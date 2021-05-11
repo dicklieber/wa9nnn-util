@@ -1,76 +1,71 @@
+@import com.wa9nnn.util.tableui.html._
 @import play.twirl.api.TwirlFeatureImports._
-@(uiTable: com.wa9nnn.util.tableui.Table)
-<table class = "@uiTable.cssClass"
 
-    @if(uiTable.id) {
-    id="@uiTable.id.get"
-}
->
-<thead>
-@for(chRow <- uiTable.columnHeaders) {
-    <tr>
-    @for(cell <- chRow) {
-        <th rowspan="@(cell.rowSpan)" colspan="@(cell.colSpan)" @if(cell.style) {
-            style="@(cell.style.get)"
+@(uiTable: com.wa9nnn.util.tableui.Table)
+<table
+    @attribute("id", uiTable.id)
+    @attributes("class", uiTable.cssClass)
+        >
+    <thead>
+    @for(chRow <- uiTable.columnHeaders) {
+        <tr>
+        @for(cell <- chRow) {
+            <th
+                @span( cell.colSpan, cell.rowSpan)
+                @attribute("title", cell.tooltip)
+                @attribute("style", cell.style)
+                @attributes("class", cell.cssClass)
+            >@(cell.value)
+            </th>
         }
-        class="@cell.renderedCssClass"
-        title="@(cell.tooltip)"
-    >@(cell.value)
-        </th>
+        </tr>
     }
-    </tr>
-}
-</thead>
-<tbody>
-@for(row <- uiTable.rows) {
-    <tr class="@(row.cssClass)" @(row.rowId match {
-        case None =>
-            ""
-        case Some(id) =>
-            s"id='$id'"
-    })
-    title = "@(row.rowToolTip)"
-    >
-    @for(cell <- row.cells) {
-        <td rowspan="@(cell.rowSpan)" colspan="@(cell.colSpan)"
-        class="@cell.renderedCssClass"
-        title="@(cell.tooltip)"
-            @if(cell.style) {
-                style="@(cell.style.get)"
-                }
-            @if(cell.id.isDefined) {
-                id="@cell.id.get"
-            }
-        > @if(cell.href.isDefined) {
-            @defining(cell.href.get) { link =>
-                @if(cell.image.nonEmpty) {
-                    <a href="@(link.url)" @if(link.target.nonEmpty) {
-                        target="@link.target"}><img src="@(cell.image.head)"></a>
-                } else {
-                    <a href="@(link.url)" @if(link.target.nonEmpty) {
-                        target="@link.target"}>@(cell.value)</a>
-                }
-            }
-        } else {
-            @if(cell.button) {
-                <button class="@(cell.button.get)">@(cell.value)</button>
-            } else {
-                @if(cell.rawHtml) {
-                    @Html(cell.value)
-                } else {
+    </thead>
+    <tbody>
+    @for(row <- uiTable.rows) {
+        <tr
+            @attributes("class", row.cssClass)
+            @attribute("id", row.rowId)
+            @attribute("title", row.rowToolTip)
+        >
+        @for(cell <- row.cells) {
+            <td
+                @attributes("class", cell.cssClass)
+                @attribute("id", cell.id)
+                @attribute("title", cell.tooltip)
+                @span( cell.colSpan, cell.rowSpan)
+
+            >
+            @if(cell.href.isDefined) {
+                @defining(cell.href.get) { link =>
                     @if(cell.image.nonEmpty) {
-                        @for(image ← cell.image) {
-                            <img src="@(image)">
-                        }
+                        <a href="@(link.url)" @if(link.target.nonEmpty) {
+                            target="@link.target"}><img src="@(cell.image.head)"></a>
                     } else {
-                        @(cell.value)
+                        <a href="@(link.url)" @if(link.target.nonEmpty) {
+                            target="@link.target"}>@(cell.value)</a>
                     }
                 }
-            }
-        }</td>
+            } else {
+                @if(cell.button) {
+                    <button class="@(cell.button.get)">@(cell.value)</button>
+                } else {
+                    @if(cell.rawHtml) {
+                        @Html(cell.value)
+                    } else {
+                        @if(cell.image.nonEmpty) {
+                            @for(image ← cell.image) {
+                                <img src="@(image)">
+                                }
+                        } else {
+                            @(cell.value)
+                        }
+                    }
+                }
+            } </td>
+        }
+        </tr>
     }
-    </tr>
-}
 </tbody>
 </table>
 

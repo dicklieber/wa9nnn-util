@@ -18,7 +18,7 @@
 
 package com.wa9nnn.util
 
-import java.time.Duration
+import java.time.{Duration, Instant}
 import scala.language.implicitConversions
 
 /**
@@ -64,4 +64,16 @@ object DurationFormat {
         }
     }
   }
+
+  /**
+   *
+   * @param instant to calculate age of.
+   * @param now for unit testing.
+   * @return nicely formatted string.
+   */
+  def apply(instant: Instant, now:Instant = Instant.now()): String = {
+    val duration = Duration.between( instant, now)
+    apply(duration)
+  }
+
 }

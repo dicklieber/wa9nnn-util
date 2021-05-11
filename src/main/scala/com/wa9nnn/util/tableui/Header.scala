@@ -19,7 +19,7 @@
 
 package com.wa9nnn.util.tableui
 
-import scala.reflect.{ClassTag, classTag}
+import scala.language.implicitConversions
 
 
 /**
@@ -28,9 +28,16 @@ import scala.reflect.{ClassTag, classTag}
  *
  * @param rows header rows.
  */
-case class Header(rows: Seq[Seq[Cell]])
+case class Header(rows: Seq[Seq[Cell]] = Seq.empty) {
+  def append(headerRow:Seq[Any]):Header = {
+    copy(rows = rows.appended(headerRow.map(Cell(_))))
+  }
+}
 
 object Header {
+  def singleRow(cols:Any*) :Header = {
+    new Header(Seq(cols.map(Cell(_))))
+  }
   /**
    *
    * @param allColHeader top row header that will span all subheaders
@@ -45,5 +52,8 @@ object Header {
       subheaders.map(Cell(_))
     ))
   }
+
+
+  implicit def s2cell(s:String):Cell = Cell(s)
 
 }

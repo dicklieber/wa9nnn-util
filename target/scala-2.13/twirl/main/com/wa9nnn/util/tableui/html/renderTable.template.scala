@@ -7,88 +7,82 @@ import _root_.play.twirl.api.Html
 import _root_.play.twirl.api.JavaScript
 import _root_.play.twirl.api.Txt
 import _root_.play.twirl.api.Xml
-/*1.2*/import play.twirl.api.TwirlFeatureImports._
+/*1.2*/import com.wa9nnn.util.tableui.html._
+/*2.2*/import play.twirl.api.TwirlFeatureImports._
 
 object renderTable extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template1[com.wa9nnn.util.tableui.Table,play.twirl.api.HtmlFormat.Appendable] {
 
   /**/
-  def apply/*2.2*/(uiTable: com.wa9nnn.util.tableui.Table):play.twirl.api.HtmlFormat.Appendable = {
+  def apply/*4.2*/(uiTable: com.wa9nnn.util.tableui.Table):play.twirl.api.HtmlFormat.Appendable = {
     _display_ {
       {
 
 
-Seq[Any](format.raw/*3.1*/("""<table class = """"),_display_(/*3.18*/uiTable/*3.25*/.cssClass),format.raw/*3.34*/(""""
+Seq[Any](format.raw/*5.1*/("""<table
+    """),_display_(/*6.6*/attribute("id", uiTable.id)),format.raw/*6.33*/("""
+    """),_display_(/*7.6*/attributes("class", uiTable.cssClass)),format.raw/*7.43*/("""
+        """),format.raw/*8.9*/(""">
+    <thead>
+    """),_display_(/*10.6*/for(chRow <- uiTable.columnHeaders) yield /*10.41*/ {_display_(Seq[Any](format.raw/*10.43*/("""
+        """),format.raw/*11.9*/("""<tr>
+        """),_display_(/*12.10*/for(cell <- chRow) yield /*12.28*/ {_display_(Seq[Any](format.raw/*12.30*/("""
+            """),format.raw/*13.13*/("""<th
+                """),_display_(/*14.18*/span( cell.colSpan, cell.rowSpan)),format.raw/*14.51*/("""
+                """),_display_(/*15.18*/attribute("title", cell.tooltip)),format.raw/*15.50*/("""
+                """),_display_(/*16.18*/attribute("style", cell.style)),format.raw/*16.48*/("""
+                """),_display_(/*17.18*/attributes("class", cell.cssClass)),format.raw/*17.52*/("""
+            """),format.raw/*18.13*/(""">"""),_display_(/*18.15*/(cell.value)),format.raw/*18.27*/("""
+            """),format.raw/*19.13*/("""</th>
+        """)))}),format.raw/*20.10*/("""
+        """),format.raw/*21.9*/("""</tr>
+    """)))}),format.raw/*22.6*/("""
+    """),format.raw/*23.5*/("""</thead>
+    <tbody>
+    """),_display_(/*25.6*/for(row <- uiTable.rows) yield /*25.30*/ {_display_(Seq[Any](format.raw/*25.32*/("""
+        """),format.raw/*26.9*/("""<tr
+            """),_display_(/*27.14*/attributes("class", row.cssClass)),format.raw/*27.47*/("""
+            """),_display_(/*28.14*/attribute("id", row.rowId)),format.raw/*28.40*/("""
+            """),_display_(/*29.14*/attribute("title", row.rowToolTip)),format.raw/*29.48*/("""
+        """),format.raw/*30.9*/(""">
+        """),_display_(/*31.10*/for(cell <- row.cells) yield /*31.32*/ {_display_(Seq[Any](format.raw/*31.34*/("""
+            """),format.raw/*32.13*/("""<td
+                """),_display_(/*33.18*/attributes("class", cell.cssClass)),format.raw/*33.52*/("""
+                """),_display_(/*34.18*/attribute("id", cell.id)),format.raw/*34.42*/("""
+                """),_display_(/*35.18*/attribute("title", cell.tooltip)),format.raw/*35.50*/("""
+                """),_display_(/*36.18*/span( cell.colSpan, cell.rowSpan)),format.raw/*36.51*/("""
 
-    """),_display_(/*5.6*/if(uiTable.id)/*5.20*/ {_display_(Seq[Any](format.raw/*5.22*/("""
-    """),format.raw/*6.5*/("""id=""""),_display_(/*6.10*/uiTable/*6.17*/.id.get),format.raw/*6.24*/(""""
-""")))}),format.raw/*7.2*/("""
-"""),format.raw/*8.1*/(""">
-<thead>
-"""),_display_(/*10.2*/for(chRow <- uiTable.columnHeaders) yield /*10.37*/ {_display_(Seq[Any](format.raw/*10.39*/("""
-    """),format.raw/*11.5*/("""<tr>
-    """),_display_(/*12.6*/for(cell <- chRow) yield /*12.24*/ {_display_(Seq[Any](format.raw/*12.26*/("""
-        """),format.raw/*13.9*/("""<th rowspan=""""),_display_(/*13.23*/(cell.rowSpan)),format.raw/*13.37*/("""" colspan=""""),_display_(/*13.49*/(cell.colSpan)),format.raw/*13.63*/("""" """),_display_(/*13.66*/if(cell.style)/*13.80*/ {_display_(Seq[Any](format.raw/*13.82*/("""
-            """),format.raw/*14.13*/("""style=""""),_display_(/*14.21*/(cell.style.get)),format.raw/*14.37*/(""""
-        """)))}),format.raw/*15.10*/("""
-        """),format.raw/*16.9*/("""class=""""),_display_(/*16.17*/cell/*16.21*/.renderedCssClass),format.raw/*16.38*/(""""
-        title=""""),_display_(/*17.17*/(cell.tooltip)),format.raw/*17.31*/(""""
-    >"""),_display_(/*18.7*/(cell.value)),format.raw/*18.19*/("""
-        """),format.raw/*19.9*/("""</th>
-    """)))}),format.raw/*20.6*/("""
-    """),format.raw/*21.5*/("""</tr>
-""")))}),format.raw/*22.2*/("""
-"""),format.raw/*23.1*/("""</thead>
-<tbody>
-"""),_display_(/*25.2*/for(row <- uiTable.rows) yield /*25.26*/ {_display_(Seq[Any](format.raw/*25.28*/("""
-    """),format.raw/*26.5*/("""<tr class=""""),_display_(/*26.17*/(row.cssClass)),format.raw/*26.31*/("""" """),_display_(/*26.34*/(row.rowId match {
-        case None =>
-            ""
-        case Some(id) =>
-            s"id='$id'"
-    })),format.raw/*31.7*/("""
-    """),format.raw/*32.5*/("""title = """"),_display_(/*32.15*/(row.rowToolTip)),format.raw/*32.31*/(""""
-    >
-    """),_display_(/*34.6*/for(cell <- row.cells) yield /*34.28*/ {_display_(Seq[Any](format.raw/*34.30*/("""
-        """),format.raw/*35.9*/("""<td rowspan=""""),_display_(/*35.23*/(cell.rowSpan)),format.raw/*35.37*/("""" colspan=""""),_display_(/*35.49*/(cell.colSpan)),format.raw/*35.63*/(""""
-        class=""""),_display_(/*36.17*/cell/*36.21*/.renderedCssClass),format.raw/*36.38*/(""""
-        title=""""),_display_(/*37.17*/(cell.tooltip)),format.raw/*37.31*/(""""
-            """),_display_(/*38.14*/if(cell.style)/*38.28*/ {_display_(Seq[Any](format.raw/*38.30*/("""
-                """),format.raw/*39.17*/("""style=""""),_display_(/*39.25*/(cell.style.get)),format.raw/*39.41*/(""""
-                """)))}),format.raw/*40.18*/("""
-            """),_display_(/*41.14*/if(cell.id.isDefined)/*41.35*/ {_display_(Seq[Any](format.raw/*41.37*/("""
-                """),format.raw/*42.17*/("""id=""""),_display_(/*42.22*/cell/*42.26*/.id.get),format.raw/*42.33*/(""""
-            """)))}),format.raw/*43.14*/("""
-        """),format.raw/*44.9*/("""> """),_display_(/*44.12*/if(cell.href.isDefined)/*44.35*/ {_display_(Seq[Any](format.raw/*44.37*/("""
-            """),_display_(/*45.14*/defining(cell.href.get)/*45.37*/ { link =>_display_(Seq[Any](format.raw/*45.47*/("""
-                """),_display_(/*46.18*/if(cell.image.nonEmpty)/*46.41*/ {_display_(Seq[Any](format.raw/*46.43*/("""
-                    """),format.raw/*47.21*/("""<a href=""""),_display_(/*47.31*/(link.url)),format.raw/*47.41*/("""" """),_display_(/*47.44*/if(link.target.nonEmpty)/*47.68*/ {_display_(Seq[Any](format.raw/*47.70*/("""
-                        """),format.raw/*48.25*/("""target=""""),_display_(/*48.34*/link/*48.38*/.target),format.raw/*48.45*/(""""""")))}),format.raw/*48.47*/("""><img src=""""),_display_(/*48.59*/(cell.image.head)),format.raw/*48.76*/(""""></a>
-                """)))}/*49.19*/else/*49.24*/{_display_(Seq[Any](format.raw/*49.25*/("""
-                    """),format.raw/*50.21*/("""<a href=""""),_display_(/*50.31*/(link.url)),format.raw/*50.41*/("""" """),_display_(/*50.44*/if(link.target.nonEmpty)/*50.68*/ {_display_(Seq[Any](format.raw/*50.70*/("""
-                        """),format.raw/*51.25*/("""target=""""),_display_(/*51.34*/link/*51.38*/.target),format.raw/*51.45*/(""""""")))}),format.raw/*51.47*/(""">"""),_display_(/*51.49*/(cell.value)),format.raw/*51.61*/("""</a>
-                """)))}),format.raw/*52.18*/("""
-            """)))}),format.raw/*53.14*/("""
-        """)))}/*54.11*/else/*54.16*/{_display_(Seq[Any](format.raw/*54.17*/("""
-            """),_display_(/*55.14*/if(cell.button)/*55.29*/ {_display_(Seq[Any](format.raw/*55.31*/("""
-                """),format.raw/*56.17*/("""<button class=""""),_display_(/*56.33*/(cell.button.get)),format.raw/*56.50*/("""">"""),_display_(/*56.53*/(cell.value)),format.raw/*56.65*/("""</button>
-            """)))}/*57.15*/else/*57.20*/{_display_(Seq[Any](format.raw/*57.21*/("""
-                """),_display_(/*58.18*/if(cell.rawHtml)/*58.34*/ {_display_(Seq[Any](format.raw/*58.36*/("""
-                    """),_display_(/*59.22*/Html(cell.value)),format.raw/*59.38*/("""
-                """)))}/*60.19*/else/*60.24*/{_display_(Seq[Any](format.raw/*60.25*/("""
-                    """),_display_(/*61.22*/if(cell.image.nonEmpty)/*61.45*/ {_display_(Seq[Any](format.raw/*61.47*/("""
-                        """),_display_(/*62.26*/for(image ← cell.image) yield /*62.49*/ {_display_(Seq[Any](format.raw/*62.51*/("""
-                            """),format.raw/*63.29*/("""<img src=""""),_display_(/*63.40*/(image)),format.raw/*63.47*/("""">
-                        """)))}),format.raw/*64.26*/("""
-                    """)))}/*65.23*/else/*65.28*/{_display_(Seq[Any](format.raw/*65.29*/("""
-                        """),_display_(/*66.26*/(cell.value)),format.raw/*66.38*/("""
-                    """)))}),format.raw/*67.22*/("""
-                """)))}),format.raw/*68.18*/("""
-            """)))}),format.raw/*69.14*/("""
-        """)))}),format.raw/*70.10*/("""</td>
-    """)))}),format.raw/*71.6*/("""
-    """),format.raw/*72.5*/("""</tr>
-""")))}),format.raw/*73.2*/("""
-"""),format.raw/*74.1*/("""</tbody>
+            """),format.raw/*38.13*/(""">
+            """),_display_(/*39.14*/if(cell.href.isDefined)/*39.37*/ {_display_(Seq[Any](format.raw/*39.39*/("""
+                """),_display_(/*40.18*/defining(cell.href.get)/*40.41*/ { link =>_display_(Seq[Any](format.raw/*40.51*/("""
+                    """),_display_(/*41.22*/if(cell.image.nonEmpty)/*41.45*/ {_display_(Seq[Any](format.raw/*41.47*/("""
+                        """),format.raw/*42.25*/("""<a href=""""),_display_(/*42.35*/(link.url)),format.raw/*42.45*/("""" """),_display_(/*42.48*/if(link.target.nonEmpty)/*42.72*/ {_display_(Seq[Any](format.raw/*42.74*/("""
+                            """),format.raw/*43.29*/("""target=""""),_display_(/*43.38*/link/*43.42*/.target),format.raw/*43.49*/(""""""")))}),format.raw/*43.51*/("""><img src=""""),_display_(/*43.63*/(cell.image.head)),format.raw/*43.80*/(""""></a>
+                    """)))}/*44.23*/else/*44.28*/{_display_(Seq[Any](format.raw/*44.29*/("""
+                        """),format.raw/*45.25*/("""<a href=""""),_display_(/*45.35*/(link.url)),format.raw/*45.45*/("""" """),_display_(/*45.48*/if(link.target.nonEmpty)/*45.72*/ {_display_(Seq[Any](format.raw/*45.74*/("""
+                            """),format.raw/*46.29*/("""target=""""),_display_(/*46.38*/link/*46.42*/.target),format.raw/*46.49*/(""""""")))}),format.raw/*46.51*/(""">"""),_display_(/*46.53*/(cell.value)),format.raw/*46.65*/("""</a>
+                    """)))}),format.raw/*47.22*/("""
+                """)))}),format.raw/*48.18*/("""
+            """)))}/*49.15*/else/*49.20*/{_display_(Seq[Any](format.raw/*49.21*/("""
+                """),_display_(/*50.18*/if(cell.button)/*50.33*/ {_display_(Seq[Any](format.raw/*50.35*/("""
+                    """),format.raw/*51.21*/("""<button class=""""),_display_(/*51.37*/(cell.button.get)),format.raw/*51.54*/("""">"""),_display_(/*51.57*/(cell.value)),format.raw/*51.69*/("""</button>
+                """)))}/*52.19*/else/*52.24*/{_display_(Seq[Any](format.raw/*52.25*/("""
+                    """),_display_(/*53.22*/if(cell.rawHtml)/*53.38*/ {_display_(Seq[Any](format.raw/*53.40*/("""
+                        """),_display_(/*54.26*/Html(cell.value)),format.raw/*54.42*/("""
+                    """)))}/*55.23*/else/*55.28*/{_display_(Seq[Any](format.raw/*55.29*/("""
+                        """),_display_(/*56.26*/if(cell.image.nonEmpty)/*56.49*/ {_display_(Seq[Any](format.raw/*56.51*/("""
+                            """),_display_(/*57.30*/for(image ← cell.image) yield /*57.53*/ {_display_(Seq[Any](format.raw/*57.55*/("""
+                                """),format.raw/*58.33*/("""<img src=""""),_display_(/*58.44*/(image)),format.raw/*58.51*/("""">
+                                """)))}),format.raw/*59.34*/("""
+                        """)))}/*60.27*/else/*60.32*/{_display_(Seq[Any](format.raw/*60.33*/("""
+                            """),_display_(/*61.30*/(cell.value)),format.raw/*61.42*/("""
+                        """)))}),format.raw/*62.26*/("""
+                    """)))}),format.raw/*63.22*/("""
+                """)))}),format.raw/*64.18*/("""
+            """)))}),format.raw/*65.14*/(""" """),format.raw/*65.15*/("""</td>
+        """)))}),format.raw/*66.10*/("""
+        """),format.raw/*67.9*/("""</tr>
+    """)))}),format.raw/*68.6*/("""
+"""),format.raw/*69.1*/("""</tbody>
 </table>
 
 """))
@@ -108,9 +102,9 @@ Seq[Any](format.raw/*3.1*/("""<table class = """"),_display_(/*3.18*/uiTable/*3.
               /*
                   -- GENERATED --
                   SOURCE: src/main/twirl/com.wa9nnn.util.tableui/renderTable.scala.html
-                  HASH: 6b412da3473e6413b98a43ad77947e4b59ac18d2
-                  MATRIX: 287->1|664->46|798->87|841->104|856->111|885->120|918->128|940->142|979->144|1010->149|1041->154|1056->161|1083->168|1115->171|1142->172|1179->183|1230->218|1270->220|1302->225|1338->235|1372->253|1412->255|1448->264|1489->278|1524->292|1563->304|1598->318|1628->321|1651->335|1691->337|1732->350|1767->358|1804->374|1846->385|1882->394|1917->402|1930->406|1968->423|2013->441|2048->455|2082->463|2115->475|2151->484|2192->495|2224->500|2261->507|2289->508|2333->526|2373->550|2413->552|2445->557|2484->569|2519->583|2549->586|2679->696|2711->701|2748->711|2785->727|2824->740|2862->762|2902->764|2938->773|2979->787|3014->801|3053->813|3088->827|3133->845|3146->849|3184->866|3229->884|3264->898|3306->913|3329->927|3369->929|3414->946|3449->954|3486->970|3536->989|3577->1003|3607->1024|3647->1026|3692->1043|3724->1048|3737->1052|3765->1059|3811->1074|3847->1083|3877->1086|3909->1109|3949->1111|3990->1125|4022->1148|4070->1158|4115->1176|4147->1199|4187->1201|4236->1222|4273->1232|4304->1242|4334->1245|4367->1269|4407->1271|4460->1296|4496->1305|4509->1309|4537->1316|4570->1318|4609->1330|4647->1347|4690->1372|4703->1377|4742->1378|4791->1399|4828->1409|4859->1419|4889->1422|4922->1446|4962->1448|5015->1473|5051->1482|5064->1486|5092->1493|5125->1495|5154->1497|5187->1509|5240->1531|5285->1545|5314->1556|5327->1561|5366->1562|5407->1576|5431->1591|5471->1593|5516->1610|5559->1626|5597->1643|5627->1646|5660->1658|5702->1682|5715->1687|5754->1688|5799->1706|5824->1722|5864->1724|5913->1746|5950->1762|5987->1781|6000->1786|6039->1787|6088->1809|6120->1832|6160->1834|6213->1860|6252->1883|6292->1885|6349->1914|6387->1925|6415->1932|6474->1960|6515->1983|6528->1988|6567->1989|6620->2015|6653->2027|6706->2049|6755->2067|6800->2081|6841->2091|6882->2102|6914->2107|6951->2114|6979->2115
-                  LINES: 10->1|15->2|20->3|20->3|20->3|20->3|22->5|22->5|22->5|23->6|23->6|23->6|23->6|24->7|25->8|27->10|27->10|27->10|28->11|29->12|29->12|29->12|30->13|30->13|30->13|30->13|30->13|30->13|30->13|30->13|31->14|31->14|31->14|32->15|33->16|33->16|33->16|33->16|34->17|34->17|35->18|35->18|36->19|37->20|38->21|39->22|40->23|42->25|42->25|42->25|43->26|43->26|43->26|43->26|48->31|49->32|49->32|49->32|51->34|51->34|51->34|52->35|52->35|52->35|52->35|52->35|53->36|53->36|53->36|54->37|54->37|55->38|55->38|55->38|56->39|56->39|56->39|57->40|58->41|58->41|58->41|59->42|59->42|59->42|59->42|60->43|61->44|61->44|61->44|61->44|62->45|62->45|62->45|63->46|63->46|63->46|64->47|64->47|64->47|64->47|64->47|64->47|65->48|65->48|65->48|65->48|65->48|65->48|65->48|66->49|66->49|66->49|67->50|67->50|67->50|67->50|67->50|67->50|68->51|68->51|68->51|68->51|68->51|68->51|68->51|69->52|70->53|71->54|71->54|71->54|72->55|72->55|72->55|73->56|73->56|73->56|73->56|73->56|74->57|74->57|74->57|75->58|75->58|75->58|76->59|76->59|77->60|77->60|77->60|78->61|78->61|78->61|79->62|79->62|79->62|80->63|80->63|80->63|81->64|82->65|82->65|82->65|83->66|83->66|84->67|85->68|86->69|87->70|88->71|89->72|90->73|91->74
+                  HASH: e7c15118922f5d35484f5d762074b1bfa3b80acf
+                  MATRIX: 287->1|332->40|709->86|843->127|880->139|927->166|958->172|1015->209|1050->218|1095->237|1146->272|1186->274|1222->283|1263->297|1297->315|1337->317|1378->330|1426->351|1480->384|1525->402|1578->434|1623->452|1674->482|1719->500|1774->534|1815->547|1844->549|1877->561|1918->574|1964->589|2000->598|2041->609|2073->614|2125->640|2165->664|2205->666|2241->675|2285->692|2339->725|2380->739|2427->765|2468->779|2523->813|2559->822|2597->833|2635->855|2675->857|2716->870|2764->891|2819->925|2864->943|2909->967|2954->985|3007->1017|3052->1035|3106->1068|3148->1082|3190->1097|3222->1120|3262->1122|3307->1140|3339->1163|3387->1173|3436->1195|3468->1218|3508->1220|3561->1245|3598->1255|3629->1265|3659->1268|3692->1292|3732->1294|3789->1323|3825->1332|3838->1336|3866->1343|3899->1345|3938->1357|3976->1374|4023->1403|4036->1408|4075->1409|4128->1434|4165->1444|4196->1454|4226->1457|4259->1481|4299->1483|4356->1512|4392->1521|4405->1525|4433->1532|4466->1534|4495->1536|4528->1548|4585->1574|4634->1592|4667->1607|4680->1612|4719->1613|4764->1631|4788->1646|4828->1648|4877->1669|4920->1685|4958->1702|4988->1705|5021->1717|5067->1745|5080->1750|5119->1751|5168->1773|5193->1789|5233->1791|5286->1817|5323->1833|5364->1856|5377->1861|5416->1862|5469->1888|5501->1911|5541->1913|5598->1943|5637->1966|5677->1968|5738->2001|5776->2012|5804->2019|5871->2055|5916->2082|5929->2087|5968->2088|6025->2118|6058->2130|6115->2156|6168->2178|6217->2196|6262->2210|6291->2211|6337->2226|6373->2235|6414->2246|6442->2247
+                  LINES: 10->1|11->2|16->4|21->5|22->6|22->6|23->7|23->7|24->8|26->10|26->10|26->10|27->11|28->12|28->12|28->12|29->13|30->14|30->14|31->15|31->15|32->16|32->16|33->17|33->17|34->18|34->18|34->18|35->19|36->20|37->21|38->22|39->23|41->25|41->25|41->25|42->26|43->27|43->27|44->28|44->28|45->29|45->29|46->30|47->31|47->31|47->31|48->32|49->33|49->33|50->34|50->34|51->35|51->35|52->36|52->36|54->38|55->39|55->39|55->39|56->40|56->40|56->40|57->41|57->41|57->41|58->42|58->42|58->42|58->42|58->42|58->42|59->43|59->43|59->43|59->43|59->43|59->43|59->43|60->44|60->44|60->44|61->45|61->45|61->45|61->45|61->45|61->45|62->46|62->46|62->46|62->46|62->46|62->46|62->46|63->47|64->48|65->49|65->49|65->49|66->50|66->50|66->50|67->51|67->51|67->51|67->51|67->51|68->52|68->52|68->52|69->53|69->53|69->53|70->54|70->54|71->55|71->55|71->55|72->56|72->56|72->56|73->57|73->57|73->57|74->58|74->58|74->58|75->59|76->60|76->60|76->60|77->61|77->61|78->62|79->63|80->64|81->65|81->65|82->66|83->67|84->68|85->69
                   -- GENERATED --
               */
           

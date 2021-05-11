@@ -24,6 +24,7 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "4.6.0" % "test",
   "org.specs2" %% "specs2-mock" % "4.6.0" % "test",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
+  "org.jsoup" % "jsoup" % "1.13.1",
 )
 
 publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")

@@ -17,6 +17,7 @@
 
 package com.wa9nnn.util.tableui
 
+import com.wa9nnn.util.{AgeColor, DurationFormat}
 import com.wa9nnn.util.TimeConverters.instantDisplayUTCLocal
 
 import java.net.URL
@@ -49,8 +50,8 @@ case class Cell(value: String,
                 image: Seq[String] = Seq.empty,
                 rowSpan: Int = 1,
                 colSpan: Int = 1,
-                tooltip: String = "", style:
-                Option[String] = None,
+                tooltip: Option[String] = None,
+                style: Option[String] = None,
                 rawHtml: Boolean = false) {
 
   /**
@@ -108,8 +109,12 @@ case class Cell(value: String,
     copy(cssClass = this.cssClass ++ cssClasses)
 
   def withStyle(style: String): Cell =
-
     copy(style = Some(style))
+
+
+  def asColoredAge(stamp: Instant, ageColor: AgeColor = AgeColor.defaultAgeColor): Cell = {
+    copy(value = DurationFormat(stamp)).withCssClass(ageColor.apply(stamp))
+  }
 
   def withButton(buttonClass: String): Cell =
 
@@ -120,19 +125,11 @@ case class Cell(value: String,
     copy(rowSpan = rowSpan)
 
   def withColSpan(colSpan: Int): Cell =
-
     copy(colSpan = colSpan)
 
   def withToolTip(toolTip: String): Cell =
+    copy(tooltip = Option(toolTip))
 
-    copy(tooltip = toolTip)
-
-  /**
-   * @return all the cssClasses separated by a space.
-   */
-  def renderedCssClass: String = {
-    cssClass.mkString(" ")
-  }
 
   /**
    * @param tc contents of a [[Cell]] to be appended to this [[Cell]] and collected into a [[Row]]

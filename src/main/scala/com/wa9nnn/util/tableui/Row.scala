@@ -30,9 +30,9 @@ package com.wa9nnn.util.tableui
 case class Row(cells: Seq[Cell],
                rowId: Option[String] = None,
                cssClass: Seq[String] = Seq.empty,
-               rowToolTip: String = "")
+               rowToolTip: Option[String] = None)
   extends RowSource {
-  def withToolTip(toolTip: String): Row = copy(rowToolTip = toolTip)
+  def withToolTip(toolTip: String): Row = copy(rowToolTip = Option(toolTip))
 
   /**
    * Append this cssClass to any exiting classes.
