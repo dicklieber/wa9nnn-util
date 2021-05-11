@@ -11,3 +11,4 @@
 .gitignore
 .DS_Store
 /project/target/
+project/project
