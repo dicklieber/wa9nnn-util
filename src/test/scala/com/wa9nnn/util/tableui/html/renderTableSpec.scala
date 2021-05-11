@@ -41,7 +41,25 @@ class renderTableSpec extends Specification {
 
       val path = Paths.get("renderhtml.html")
       Files.writeString(path, html)
-      html must beEqualTo("""""")
+      html must beEqualTo("""<table class="headeredTable">
+                            | <thead>
+                            |  <tr>
+                            |   <th colspan="3" class="sorter-false">Overall </th>
+                            |  </tr>
+                            |  <tr>
+                            |   <th>Alpha </th>
+                            |   <th>Beta </th>
+                            |   <th>Charlie </th>
+                            |  </tr>
+                            | </thead>
+                            | <tbody>
+                            |  <tr>
+                            |   <td> Row1 </td>
+                            |   <td> a string </td>
+                            |   <td class="number"> 01/01/70 00:00 UTC (18:00 CST) </td>
+                            |  </tr>
+                            | </tbody>
+                            |</table>""".stripMargin.replaceAll("\n" , " \n"))
     }
   }
 }
