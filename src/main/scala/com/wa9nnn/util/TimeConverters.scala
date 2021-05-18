@@ -63,8 +63,9 @@ object TimeConverters {
 
   /**
    * UTC from [[Instant]] with local time
+   *
    * @param instant any time since 1970
-   * @param zoneId what to consider local.
+   * @param zoneId  what to consider local.
    * @return
    */
   def instantDisplayUTCLocal(instant: Instant, zoneId: ZoneId = TimeZone.getDefault.toZoneId): String = {
@@ -75,7 +76,10 @@ object TimeConverters {
   }
 
   implicit def local(instant: Instant): String = {
-    instantDisplayUTCLocal(instant)
+    if (instant == Instant.EPOCH)
+      "--"
+    else
+      instantDisplayUTCLocal(instant)
   }
 
 }
