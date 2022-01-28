@@ -64,41 +64,48 @@ case class Row(cells: Seq[Cell],
 
   override def toRow: Row = this
 }
+
 object Row {
-        /**
-         *
-         * @param rowHeader text for leftmost column in row.
-         * @param values    values for subsequent cells in the row.
-         * @return a Row.
-         */
-        def apply(rowHeader: String, values: Any*): Row = {
-                val headerCell = Cell(rowHeader)
-                val subsiquentCells = values.map(Cell(_))
-                Row(headerCell +: subsiquentCells)
-        }
+  /**
+   *
+   * @param rowHeader text for leftmost column in row.
+   * @param values    values for subsequent cells in the row.
+   * @return a Row.
+   */
+  def apply(rowHeader: String, values: Any*): Row = {
+    val headerCell = Cell(rowHeader)
+    val subsiquentCells = values.map(Cell(_))
+    Row(headerCell +: subsiquentCells)
+  }
 
-        /**
-         *
-         * @param headerCell  leftmost column in row.
-         * @param values      values for subsiquent cells in the row.
-         * @return
-         */
-        def apply(headerCell: Cell, values: Any*): Row = {
-                val subsiquentCells = values.map(Cell(_))
-                Row(headerCell +: subsiquentCells)
-        }
+  /**
+   *
+   * @param headerCell  leftmost column in row.
+   * @param values      values for subsiquent cells in the row.
+   * @return
+   */
+  def apply(headerCell: Cell, values: Any*): Row = {
+    val subsiquentCells = values.map(Cell(_))
+    Row(headerCell +: subsiquentCells)
+  }
 
-        /**
-         * Works for any case class assuming types are understood by [[Cell]] for complex i.e. parameters that are other case classes this will
-         * make [[Cell]]s that just invoke toString, which may not be what you want.
-         * Usually you'll want to implement your own method on the case class thqt returns a UiRow so you have full control over order.
-         * If you use this use [[Header[T]]] to build a header to make a UiTable
-         *
-         * @param anyCaseClass case classes automatically impement [[Product]]
-         * @return
-         */
-        def apply(anyCaseClass: Product): Row = {
-                val r: Seq[Cell] = anyCaseClass.productIterator.map(Cell(_)).toSeq
-                new Row(r)
-        }
+  /**
+   * Works for any case class assuming types are understood by [[Cell]] for complex i.e. parameters that are other case classes this will
+   * make [[Cell]]s that just invoke toString, which may not be what you want.
+   * Usually you'll want to implement your own method on the case class thqt returns a UiRow so you have full control over order.
+   * If you use this use [[Header[T]]] to build a header to make a UiTable
+   *
+   * @param anyCaseClass case classes automatically impement [[Product]]
+   * @return
+   */
+  def apply(anyCaseClass: Product): Row = {
+    val r: Seq[Cell] = anyCaseClass.productIterator.map(Cell(_)).toSeq
+    new Row(r)
+  }
+
+  def ofAny(any:Any*):Row = {
+    Row(
+      any.map(Cell(_))
+    )
+  }
 }
