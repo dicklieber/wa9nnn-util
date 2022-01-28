@@ -188,6 +188,7 @@ object Cell {
           new Cell("")
         case Some(x) =>
           Cell(x)
+        case cp:CellProvider => cp.toCell
         case other =>
           new Cell(other.toString)
       }
