@@ -1,5 +1,5 @@
 
 @(attributeName:String, value:Seq[String])
 @if(value.nonEmpty){
-    @attributeName = @(value.mkString(" "))
+    @attributeName = '@(value.mkString(" "))'
 }

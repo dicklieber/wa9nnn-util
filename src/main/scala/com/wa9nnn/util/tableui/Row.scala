@@ -52,6 +52,21 @@ case class Row(cells: Seq[Cell],
   def :+(in: Any): Row = {
     copy(cells = cells :+ Cell(in))
   }
+  /**
+   * Append a cell to this row if not None
+   *
+   * @param maybeIn to be appended. If this is a [[Cell]] it is appended.
+   *           If any other type, a new [[Cell]] will be created with the value.
+   * @return a new UiRow with additional cell.
+   */
+  def addOption(maybeIn: Option[Any]): Row = {
+    maybeIn match {
+      case Some(value: Any) =>
+        copy(cells = cells :+ Cell(value))
+      case None =>
+        this
+    }
+  }
 
   /**
    * @return all the cssClasses separated by a space.
