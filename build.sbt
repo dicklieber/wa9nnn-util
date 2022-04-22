@@ -19,12 +19,16 @@ lazy val `fdcluster` = (project in file("."))
   buildInfoPackage := "com.wa9nnn.util"
 )
 scalacOptions in(Compile, doc) ++= Seq("-verbose", "-Ymacro-annotations")
+val logbackVersion = "1.2.10"
 
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "4.6.0" % "test",
   "org.specs2" %% "specs2-mock" % "4.6.0" % "test",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
   "org.jsoup" % "jsoup" % "1.13.1",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4",
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
+
 )
 
 publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")
