@@ -1,3 +1,4 @@
+import sbt.Credentials
 
 name := "util"
 organization := "com.wa9nnn"
@@ -31,6 +32,25 @@ libraryDependencies ++= Seq(
 
 )
 
-publishTo := Some("Artifactory Realm" at "https://wa9nnn.jfrog.io/artifactory/wa9nnn")
-credentials += Credentials(Path.userHome / ".sbt" / "jfrog.credentials")
+//publishTo := Some("repo.wa9nnn.net" at "194.113.64.105/releases")
+//credentials += Credentials(Path.userHome / ".sbt" / "jfrog.credentials")
+//
+//credentials += Credentials(Path.userHome
+//  / ".sbt" / "wa9nnn.credentials")
+
+//WWW-Authenticate: BASIC realm="Sonatype Nexus Repository Manager"
+
+
+//credentials += Credentials("Reposilite Repository", "194.113.64.105", "dick", "zDNxOBMR3lr1+V4q+Ys5Wm2vYsN+VtT7Yd7M9BAfzoEvXo65+ny74Mm92veMqTEG")
+credentials += Credentials("Sonatype Nexus Repository Manager", "localhost", "wa9nnn", "12AX7")
+//http://localhost:8081/repository/maven-snapshots/
+publishTo := {
+  val server = "http://localhost:8081/repository/maven-"
+  if (isSnapshot.value)
+    Some(("Sonatype Nexus Repository Manager" at server + "snapshots").withAllowInsecureProtocol(true))
+  else
+    Some(("Sonatype Nexus Repository Manager"  at server + "releases").withAllowInsecureProtocol(true))
+}
+//resolvers +=
+//  ("Sonatype Snapshots Nexus" at  "http://localhost:8081/repository/maven-snapshots").withAllowInsecureProtocol(true)
 
