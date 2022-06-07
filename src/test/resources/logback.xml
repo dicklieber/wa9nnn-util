@@ -46,7 +46,7 @@
     <logger name="application" level="DEBUG" />
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
-   <logger name="com.wa9nnn.PwdEncrypter" level="TRACE"/>
+   <logger name="com.wa9nnn.PasswordEncrypter" level="TRACE"/>
 
     <root level="TRACE">
         <appender-ref ref="ASYNCFILE" />

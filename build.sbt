@@ -41,16 +41,9 @@ libraryDependencies ++= Seq(
 //WWW-Authenticate: BASIC realm="Sonatype Nexus Repository Manager"
 
 
-//credentials += Credentials("Reposilite Repository", "194.113.64.105", "dick", "zDNxOBMR3lr1+V4q+Ys5Wm2vYsN+VtT7Yd7M9BAfzoEvXo65+ny74Mm92veMqTEG")
-credentials += Credentials("Sonatype Nexus Repository Manager", "localhost", "wa9nnn", "12AX7")
-//http://localhost:8081/repository/maven-snapshots/
-publishTo := {
-  val server = "http://localhost:8081/repository/maven-"
-  if (isSnapshot.value)
-    Some(("Sonatype Nexus Repository Manager" at server + "snapshots").withAllowInsecureProtocol(true))
-  else
-    Some(("Sonatype Nexus Repository Manager"  at server + "releases").withAllowInsecureProtocol(true))
-}
-//resolvers +=
-//  ("Sonatype Snapshots Nexus" at  "http://localhost:8081/repository/maven-snapshots").withAllowInsecureProtocol(true)
+resolvers +=
+  "Reposilite" at  "http://127.0.0.1:8080/snapshots"
 
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials-reposolite")
+
+publishTo := Some(("Reposilite" at "http://127.0.0.1:8080").withAllowInsecureProtocol(true))
