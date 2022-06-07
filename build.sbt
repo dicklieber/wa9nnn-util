@@ -8,7 +8,7 @@ organizationHomepage := Some(url("http:/www.wa9nnn.com"))
 scalaVersion := "2.13.5"
 
 //idePackagePrefix := Some("com.wa9nnn.tableui")
-lazy val `fdcluster` = (project in file("."))
+lazy val `util` = (project in file("."))
   .enablePlugins(GitPlugin, BuildInfoPlugin, SbtTwirl).settings(
   buildInfoKeys ++= Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion,
     git.gitCurrentTags, git.gitCurrentBranch, git.gitHeadCommit, git.gitHeadCommitDate, git.baseVersion,
@@ -31,10 +31,13 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % logbackVersion,
 
 )
-
 resolvers +=
-  "Reposilite" at  "http://127.0.0.1:8080/releases"
+  "ReposiliteXYZZY" at  "http://127.0.0.1:8080/releases"
 
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials-reposolite")
+//credentials += Credentials("Reposilite", "127.0.0.1", "wa9nnn-deploy", "T/d7hlJWwdYMIj1GxmmVIB3IwuZ4X1FfZq7KDCtgbrjpTvBwLdxT2mSYGkfW025F")
+credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposolite")
 
-publishTo := Some(("Reposilite" at "http://127.0.0.1:8080").withAllowInsecureProtocol(true))
+publishTo := Some(("ReposilitePLUGH" at "http://194.113.64.105:8080/releases").withAllowInsecureProtocol(true))
+//publishTo := Some(("ReposilitePLUGH" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
+
+

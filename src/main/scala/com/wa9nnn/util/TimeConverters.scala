@@ -61,7 +61,7 @@ object TimeConverters {
   val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm z")
   val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm z")
 
-  /**
+   /**
    * UTC from [[Instant]] with local time
    *
    * @param instant any time since 1970
