@@ -32,15 +32,6 @@ libraryDependencies ++= Seq(
 
 )
 
-//publishTo := Some("repo.wa9nnn.net" at "194.113.64.105/releases")
-//credentials += Credentials(Path.userHome / ".sbt" / "jfrog.credentials")
-//
-//credentials += Credentials(Path.userHome
-//  / ".sbt" / "wa9nnn.credentials")
-
-//WWW-Authenticate: BASIC realm="Sonatype Nexus Repository Manager"
-
-
 resolvers +=
   "Reposilite" at  "http://127.0.0.1:8080/snapshots"
 
