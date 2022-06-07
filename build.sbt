@@ -33,7 +33,7 @@ libraryDependencies ++= Seq(
 )
 
 resolvers +=
-  "Reposilite" at  "http://127.0.0.1:8080"
+  "Reposilite" at  "http://127.0.0.1:8080/releases"
 
 credentials += Credentials(Path.userHome / ".sbt" / ".credentials-reposolite")
 
