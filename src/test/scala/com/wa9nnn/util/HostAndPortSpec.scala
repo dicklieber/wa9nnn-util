@@ -44,7 +44,13 @@ class HostAndPortSpec extends Specification {
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
       val s:String = hostAndPort
       s must beEqualTo ("www.u505.com:123")
+    }
 
+    "socketaddress" in {
+      val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
+      val address = hostAndPort.toSocketAddress
+      address.getPort must beEqualTo (123)
+      address.getHostString must beEqualTo ("www.u505.com")
     }
   }
 }

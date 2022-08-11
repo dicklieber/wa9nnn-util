@@ -17,7 +17,7 @@
 
 package com.wa9nnn.util
 
-import java.net.InetSocketAddress
+import java.net.{InetAddress, InetSocketAddress}
 
 case class HostAndPort(host: String, port: Int) extends Ordered[HostAndPort] {
 
@@ -25,8 +25,10 @@ case class HostAndPort(host: String, port: Int) extends Ordered[HostAndPort] {
     f"$host:$port%d"
 
   def toSocketAddress: InetSocketAddress = {
-    new InetSocketAddress(host, port)
+    new InetSocketAddress(toInetAddress, port)
   }
+
+  def toInetAddress:InetAddress = InetAddress.getByName(host)
 
 
   override def compare(that: HostAndPort): Int = {
