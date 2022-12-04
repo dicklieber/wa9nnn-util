@@ -29,6 +29,7 @@ libraryDependencies ++= Seq(
   "org.jsoup" % "jsoup" % "1.13.1",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4",
   "ch.qos.logback" % "logback-classic" % logbackVersion,
+  "com.typesafe.play" %% "play-json" % "2.9.3",
 
 )
 resolvers +=

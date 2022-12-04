@@ -18,19 +18,20 @@
 package com.wa9nnn.util
 
 import org.specs2.mutable.Specification
+import play.api.libs.json.Json
 
 class HostAndPortSpec extends Specification {
 
   "HostAndPort" should {
     "handle host with port" in {
       val hostAndPort = HostAndPort("www.u505.com:123", 80)
-      hostAndPort.host must beEqualTo ("www.u505.com")
-      hostAndPort.port must beEqualTo (123)
+      hostAndPort.host must beEqualTo("www.u505.com")
+      hostAndPort.port must beEqualTo(123)
     }
     "handle host with default port" in {
       val hostAndPort = HostAndPort("www.u505.com", 80)
-      hostAndPort.host must beEqualTo ("www.u505.com")
-      hostAndPort.port must beEqualTo (80)
+      hostAndPort.host must beEqualTo("www.u505.com")
+      hostAndPort.port must beEqualTo(80)
     }
     "fail with non-numeric port" in {
       HostAndPort("www.u505.com:crap", 80) must throwAn[IllegalArgumentException]
@@ -42,15 +43,24 @@ class HostAndPortSpec extends Specification {
     "implicit toString" in {
       import com.wa9nnn.util.HostAndPort.hostAndPortToString
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
-      val s:String = hostAndPort
-      s must beEqualTo ("www.u505.com:123")
+      val s: String = hostAndPort
+      s must beEqualTo("www.u505.com:123")
     }
 
     "socketaddress" in {
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
       val address = hostAndPort.toSocketAddress
-      address.getPort must beEqualTo (123)
-      address.getHostString must beEqualTo ("www.u505.com")
+      address.getPort must beEqualTo(123)
+      address.getHostString must beEqualTo("www.u505.com")
+    }
+
+    "json" in {
+      import com.wa9nnn.util.HostAndPort.hostAndPortFormat
+      val hostAndPort: HostAndPort = HostAndPort("www.u505.com", 80)
+      val pretty = Json.prettyPrint(Json.toJson(hostAndPort))
+      pretty must beEqualTo(""""www.u505.com:80"""")
+      val backAgain = Json.parse(pretty).as[HostAndPort]
+      backAgain must beEqualTo(hostAndPort)
     }
   }
 }

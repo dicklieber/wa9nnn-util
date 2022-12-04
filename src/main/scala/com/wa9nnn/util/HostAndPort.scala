@@ -17,6 +17,8 @@
 
 package com.wa9nnn.util
 
+import play.api.libs.json.{Format, JsError, JsResult, JsString, JsSuccess, JsValue}
+
 import java.net.{InetAddress, InetSocketAddress}
 
 case class HostAndPort(host: String, port: Int) extends Ordered[HostAndPort] {
@@ -70,4 +72,22 @@ object HostAndPort {
         throw new IllegalArgumentException(s"""Expecting "host:port" or "host", for default port ($defaultPort) """)
     }
   }
+
+  implicit val hostAndPortFormat: Format[HostAndPort] = new Format[HostAndPort] {
+    override def reads(json: JsValue): JsResult[HostAndPort] = {
+
+      try {
+        val host = json.as[String]
+        JsSuccess( HostAndPort(host, 80))
+      }
+      catch {
+        case e: IllegalArgumentException => JsError(e.getMessage)
+      }
+    }
+
+    override def writes(hostAndPort: HostAndPort): JsValue = {
+      JsString(hostAndPort.toString)
+    }
+  }
+
 }
