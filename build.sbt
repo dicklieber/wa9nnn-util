@@ -4,6 +4,9 @@ name := "util"
 organization := "com.wa9nnn"
 organizationHomepage := Some(url("http:/www.wa9nnn.com"))
 
+githubOwner := "dickieber"
+githubRepository := "util"
+githubTokenSource := TokenSource.GitConfig("github.token")
 
 scalaVersion := "2.13.5"
 
@@ -32,6 +35,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json" % "2.9.3",
 
 )
+
+resolvers += Resolver.githubPackages("dicklieber")
+/*
 resolvers +=
   "ReposiliteXYZZY" at  "http://127.0.0.1:8080/releases"
 
@@ -41,4 +47,5 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposolite")
 publishTo := Some(("ReposilitePLUGH" at "http://194.113.64.105:8080/releases").withAllowInsecureProtocol(true))
 //publishTo := Some(("ReposilitePLUGH" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
 
+*/
 
