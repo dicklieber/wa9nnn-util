@@ -1,7 +1,7 @@
 import sbt.Credentials
 
 name := "util"
-organization := "com.wa9nnn"
+organization := "net.wa9nnn"
 organizationHomepage := Some(url("http:/www.wa9nnn.com"))
 
 githubOwner := "dickieber"
