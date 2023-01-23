@@ -18,5 +18,3 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-twirl" % "1.5.1")
 
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
 
-addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.3")
-
