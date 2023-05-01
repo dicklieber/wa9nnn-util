@@ -16,6 +16,7 @@
  */
 
 package com.wa9nnn.util
+
 import play.api.libs.json._
 
 import scala.reflect.ClassTag

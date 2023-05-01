@@ -52,15 +52,18 @@ case class Cell(value: String,
                 colSpan: Int = 1,
                 tooltip: Option[String] = None,
                 style: Option[String] = None,
-                rawHtml: Boolean = false) {
+                rawHtml: Boolean = false,
+                name:Option[String] = None) {
 
   /**
    * @param id is attribute.
    * @return copy of TableCell with id attribute added.
    */
   def withId(id: String): Cell =
-
     copy(id = Some(id))
+
+  def withName(name: String): Cell =
+    copy(id = Some(name))
 
   def withUrl(url: String): Cell =
 
