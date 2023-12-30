@@ -43,7 +43,7 @@ libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.11.0"
 
 )
-resolvers +=
+/*resolvers +=
   ("ReposiliteXYZZY" at "http://repo.wa9nnn.net:8080/releases").withAllowInsecureProtocol(true)
 
 //credentials += Credentials("Reposilite", "127.0.0.1", "wa9nnn-deploy", "T/d7hlJWwdYMIj1GxmmVIB3IwuZ4X1FfZq7KDCtgbrjpTvBwLdxT2mSYGkfW025F")
@@ -51,5 +51,5 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposolite")
 
 publishTo := Some(("ReposilitePLUGH" at "http://repo.wa9nnn.net:8080/releases").withAllowInsecureProtocol(true))
 //publishTo := Some(("ReposilitePLUGH" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
-
+*/
 
