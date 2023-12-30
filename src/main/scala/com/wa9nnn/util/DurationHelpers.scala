@@ -18,13 +18,17 @@
 
 package com.wa9nnn.util
 
-import java.time.{Duration, Instant}
-import scala.language.implicitConversions
+import java.time
+import java.time.Instant
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
+
+//import scala.language.implicitConversions
 
 /**
  * Format a Java 1.8 [[Duration]] to nice human readable, scaled string.
  */
-object DurationFormat {
+object DurationHelpers {
 
   val ONE_SECOND = 1000L
   val ONE_MINUTE = 60000L
@@ -34,10 +38,9 @@ object DurationFormat {
 
   /**
    *
-   * @param duration how long
    * @return string e.g. "59 min 2 sec" or "999 ms"
    */
-  implicit def apply(duration: Duration): String = {
+  given Conversion[Duration, String] = duration =>
     duration.toMillis match {
       case ms if ms < ONE_SECOND => f"${duration.toMillis} ms"
       case ms if ms == ONE_SECOND => "1 sec"
@@ -53,27 +56,29 @@ object DurationFormat {
         val hours = ms / ONE_HOUR
         val minutes = (ms - hours * ONE_HOUR) / ONE_MINUTE
         f"$hours%d hours $minutes%d min"
-      case ms  =>
+      case ms =>
         val days = ms / ONE_DAY
         val hours = (ms - days * ONE_DAY) / ONE_HOUR
         val mins = (ms - (hours * ONE_HOUR + days * ONE_DAY)) / ONE_MINUTE
-        if(mins == 0) {
+        if (mins == 0) {
           f"$days%d day $hours%d hour"
-        }else{
+        } else {
           f"$days%d day $hours%d hour $mins%d min"
         }
     }
-  }
+
 
   /**
+   * Durationon between two [[Instant]]s or one [[Instant]] and now.
    *
-   * @param instant to calculate age of.
-   * @param now for unit testing.
-   * @return nicely formatted string.
+   * @param instant
+   * @param now
+   * @return
    */
-  def apply(instant: Instant, now:Instant = Instant.now()): String = {
-    val duration = Duration.between( instant, now)
-    apply(duration)
+  def between(instant: Instant, now: Instant = Instant.now()): Duration = {
+    val javaDuration: time.Duration = java.time.Duration.between(instant, now)
+    Duration(javaDuration.toMillis, TimeUnit.MILLISECONDS)
   }
+
 
 }

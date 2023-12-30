@@ -1,13 +1,14 @@
 
 package com.wa9nnn.util.tableui
 
-import com.wa9nnn.util.tableui
-import org.specs2.matcher.{DataTables, MatchResult, MatchSuccess}
-import org.specs2.mutable.Specification
+import com.wa9nnn.util.{UtilSpec, tableui}
 
 
-class MultiColumnSpec extends Specification with DataTables {
+class MultiColumnSpec extends UtilSpec  {
 
+  
+  
+  
   val expected100: String =
     """0 10 20 30 40 50 60 70 80 90
       |1 11 21 31 41 51 61 71 81 91
@@ -72,43 +73,42 @@ class MultiColumnSpec extends Specification with DataTables {
       val items: Seq[Cell] = Range(0, 99).map(Cell(_))
       val header = "Header"
       val table: tableui.Table = MultiColumn(items, 10, header)
-      table.headers must haveLength(1)
+      table.headers must have length 1
       val headerRow0 = table.headers.head
-      headerRow0 must haveLength(1)
+      headerRow0 must have length 1
       val headerCell = headerRow0.head.asInstanceOf[Cell]
-      headerCell.colSpan must beEqualTo(10)
+      headerCell.colSpan must equal(10)
 
       val rows: Seq[Row] = table.rows
       val lastCell: Cell = rows.last.cells.last
-      lastCell.value must beEqualTo("")
+      lastCell.value must equal("")
     }
     "create Table noHeader" in {
       val items: Seq[Cell] = Range(0, 99).map(Cell(_))
       val header = "Header"
       val table: tableui.Table = MultiColumn(items, 10)
-      table.headers must haveSize(0)
-      ok
+      table.headers must have size(0)
     }
     "empty items" in {
       val table: tableui.Table = MultiColumn(Seq.empty, 10, noDataMessage = "empty")
-      table.rows must haveSize(1)
+      table.rows must have size(1)
       val uiRow: Row = table.rows.head
-      uiRow.cells must haveSize(1)
-      uiRow.cells.head.value must beEqualTo("empty")
+      uiRow.cells must have size(1)
+      uiRow.cells.head.value must equal("empty")
     }
   }
 
-  def gridCheck(nItems: Int, expected: String): MatchResult[String] = {
+  def gridCheck(nItems: Int, expected: String):Unit = {
     val items = Range(0, nItems).map(Cell(_))
 
     val organized: Seq[Seq[Any]] = MultiColumn.organize(items, 10)
-    val grid: String = organized.map { row: Seq[Any] ⇒
+    val grid: String = organized.map { row ⇒
       row.map(_.toString).mkString(" ")
     }.mkString("\n")
     val equals: Boolean = grid == expected
     println(s"nItems: $nItems grid: $grid expected: $expected  eq: $equals  $$$$\n")
-//    val r: MatchResult[String] = grid must beEqualTo(expected)
-  "grid" must beEqualTo("grid")
+//    val r: MatchResult[String] = grid must equal(expected)
+  "grid" must equal("grid")
 
   }
 }

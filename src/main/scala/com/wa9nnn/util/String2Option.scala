@@ -20,12 +20,10 @@ package com.wa9nnn.util
 import scala.language.implicitConversions
 
 object String2Option {
-  implicit def s2o(in: String): Option[String] = {
-    in match {
-      case "" =>
-        None
-      case x =>
-        Option(x) // handles null
-    }
+  given Conversion[String, Option[String]] = {
+    case "" =>
+      None
+    case x =>
+      Option(x) // handles null
   }
 }

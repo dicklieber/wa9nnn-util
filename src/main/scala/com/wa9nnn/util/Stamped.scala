@@ -17,9 +17,11 @@
 
 package com.wa9nnn.util
 
-import java.time.{Clock, Duration, Instant}
 
-import com.wa9nnn.util.DurationFormat._
+import com.wa9nnn.util.DurationHelpers.{between, given}
+
+import java.time.{Clock, Instant}
+import scala.concurrent.duration.Duration
 
 /**
  * A class that has a timestamp.
@@ -32,10 +34,10 @@ trait Stamped {
    * @param clock provide for unit tests.
    * @return how old this object is.
    */
-  def age(clock: Clock = Clock.systemUTC()): String = {
-    Duration.between(stamp, Instant.now(clock))
-  }
-def duration:Duration = Duration.between(stamp, Instant.now)
+  def age(clock: Clock = Clock.systemUTC()): String =
+    duration
+
+  def duration: Duration = between(stamp)
 
   /**
    *
@@ -44,9 +46,10 @@ def duration:Duration = Duration.between(stamp, Instant.now)
    * @return if the object is older then the passed in duration.
    */
   def olderThan(duration: Duration, clock: Clock = Clock.systemUTC()): Boolean = {
-    Duration.between(stamp, Instant.now(clock)).toMillis > duration.toMillis
+    between(stamp, Instant.now(clock)).toMillis > duration.toMillis
   }
-  def olderThan(stamped: Stamped) :Boolean ={
+
+  def olderThan(stamped: Stamped): Boolean = {
     olderThan(stamped.duration)
   }
 }

@@ -17,22 +17,25 @@
 
 package com.wa9nnn.util
 
-import org.specs2.mutable.Specification
 
-class String2OptionSpec extends Specification {
-import String2Option.s2o
-  "String2OptionSpec" should {
+import scala.None
+import String2Option.given
+
+class String2OptionTest extends UtilSpec {
+
+  "String2Option" should {
     "nonEmpty" in {
-      val o:Option[String] = "CQCQ"
-      o must beSome("CQCQ")
+      val o: Option[String] = "CQCQ"
+      o must equal(Some("CQCQ"))
     }
     "empty" in {
-      val o:Option[String] = ""
-      o must beNone
+      val o: Option[String] = ""
+      o must equal (None)
     }
     "null" in {
-      val o:Option[String] = null.asInstanceOf[String]
-      o must beNone
+
+     val o: Option[String] = null.asInstanceOf[String]
+      o must equal (None)
     }
   }
 }

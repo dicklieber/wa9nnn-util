@@ -1,18 +1,19 @@
 package com.wa9nnn.util.tableui
 
-import org.specs2.mutable.Specification
+import com.wa9nnn.util.UtilSpec
 
-class OddEvenRowSpec extends Specification {
+
+class OddEvenRowSpec extends UtilSpec {
 
   "OddEvenRowSpec" should {
     val oer = new OddEvenRow()
     "proper sequence string" in {
-      oer.nextRowClass must be equalTo "odd"
-      oer.nextRowClass must be equalTo "even"
-      oer.nextRowCssClass.cssClass must be equalTo "odd"
-      oer.nextRowCssClass.cssClass must be equalTo "even"
-      oer.nextRowClass must be equalTo "odd"
-      oer.nextRowCssClass.cssClass must be equalTo "even"
+      oer.nextRowClass must equal("odd")
+      oer.nextRowClass must equal("even")
+      oer.nextRowCssClass.cssClass must equal("odd")
+      oer.nextRowCssClass.cssClass must equal("even")
+      oer.nextRowClass must equal("odd")
+      oer.nextRowCssClass.cssClass must equal("even")
     }
   }
 }

@@ -17,10 +17,10 @@
 
 package com.wa9nnn.util.tableui
 
-case class ImageBool(trueImageUrl: String, falseImageUrl:String) {
+case class ImageBool(trueImageUrl: String, falseImageUrl: String) {
   def apply(value: Boolean): Cell = {
-    val src = if(value)trueImageUrl else falseImageUrl
+    val src = if (value) trueImageUrl else falseImageUrl
 
-  Cell.rawHtml(s"<img src = '$src'>")
+    Cell.rawHtml(s"<img src = '$src'>")
   }
 }

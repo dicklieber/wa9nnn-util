@@ -20,7 +20,7 @@
 package com.wa9nnn.util
 
 import java.time.format.DateTimeFormatter
-import java.time.{Duration, Instant, ZoneId, ZonedDateTime}
+import java.time.{Instant, ZoneId, ZonedDateTime}
 import java.util.TimeZone
 import scala.language.implicitConversions
 
@@ -34,23 +34,8 @@ object TimeConverters {
    * @param in value from instant.toString
    * @return corresponding Instant
    */
-  @scala.inline
-  implicit def stringToInstant(in: String): Instant = {
-    Instant.parse(in)
-  }
+  given Conversion[String, Instant] = (in: String) => Instant.parse(in)
 
-  /**
-   * sql date and time suck!  There's's no good way to combine them
-   *
-   * @param sqlDate stupid java.sql.Date
-   * @param sqlTime stupid  java.sql.Time
-   * @return the java instant
-   */
-
-  @scala.inline
-  implicit def durationToString(duration: Duration): String = {
-    DurationFormat(duration)
-  }
 
   private val _fileStamp = DateTimeFormatter.ofPattern("YYYY-MM-dd HHmmssz")
 
@@ -61,7 +46,7 @@ object TimeConverters {
   val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm z")
   val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm z")
 
-   /**
+  /**
    * UTC from [[Instant]] with local time
    *
    * @param instant any time since 1970

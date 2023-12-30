@@ -17,14 +17,14 @@
 
 package com.wa9nnn.util.tableui.html
 
+import com.wa9nnn.util.UtilSpec
 import com.wa9nnn.util.tableui.Header.singleRow
 import com.wa9nnn.util.tableui.{Cell, Header, Row, Table, TableRenderer}
-import org.specs2.mutable.Specification
 
 import java.nio.file.{Files, Paths}
 import java.time.Instant
 
-class renderTableSpec extends Specification {
+class renderTableSpec extends UtilSpec {
 
   "renderTableSpec" should {
     "render" in {
@@ -41,7 +41,7 @@ class renderTableSpec extends Specification {
 
       val path = Paths.get("renderhtml.html")
       Files.writeString(path, html)
-      html must beEqualTo("""<table class="headeredTable">
+      html must equal("""<table class="headeredTable">
                             | <thead>
                             |  <tr>
                             |   <th colspan="3" class="sorter-false">Overall </th>

@@ -17,12 +17,16 @@
 
 package com.wa9nnn.util.tableui
 
-import com.wa9nnn.util.{AgeColor, DurationFormat}
-import com.wa9nnn.util.TimeConverters.instantDisplayUTCLocal
+import com.wa9nnn.util.{AgeColor, DurationHelpers, TimeConverters}
 
 import java.net.URL
 import java.text.DecimalFormat
-import java.time.{Duration, Instant}
+import java.time.Instant
+import DurationHelpers.between
+import DurationHelpers.given
+
+import scala.concurrent.duration.Duration
+
 
 /**
  * One cell in a row of a table
@@ -53,7 +57,7 @@ case class Cell(value: String,
                 tooltip: Option[String] = None,
                 style: Option[String] = None,
                 rawHtml: Boolean = false,
-                name:Option[String] = None) {
+                name: Option[String] = None) {
 
   /**
    * @param id is attribute.
@@ -116,7 +120,7 @@ case class Cell(value: String,
 
 
   def asColoredAge(stamp: Instant, ageColor: AgeColor = AgeColor.defaultAgeColor): Cell = {
-    copy(value = DurationFormat(stamp)).withCssClass(ageColor.apply(stamp))
+    copy(value = between(stamp)).withCssClass(ageColor.apply(stamp))
   }
 
   def withButton(buttonClass: String): Cell =
@@ -166,7 +170,8 @@ object Cell {
         case s: String =>
           new Cell(s)
         case duration: Duration =>
-          new Cell(com.wa9nnn.util.DurationFormat(duration)).withCssClass("number")
+          new Cell(duration)
+            .withCssClass("number")
         case instant: Instant =>
           (instant match {
             case Instant.MIN =>
@@ -174,7 +179,7 @@ object Cell {
             case Instant.MAX =>
               new Cell("\u03C9")
             case ok =>
-              new Cell(instantDisplayUTCLocal(ok))
+              new Cell(TimeConverters.instantDisplayUTCLocal(ok))
           }).withCssClass("number")
         case i: Int =>
           new Cell(java.text.NumberFormat.getIntegerInstance.format(i), cssClass = Seq("number"))
@@ -191,7 +196,7 @@ object Cell {
           new Cell("")
         case Some(x) =>
           Cell(x)
-        case cp:CellProvider => cp.toCell
+        case cp: CellProvider => cp.toCell
         case other =>
           new Cell(other.toString)
       }

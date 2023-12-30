@@ -18,22 +18,24 @@
 
 package com.wa9nnn.util
 
-import org.specs2.mutable.Specification
+import com.wa9nnn.util.tableui.Row
 
-class CountedSpec extends Specification {
+
+class CountedSpec extends UtilSpec {
 
   "Counted" should {
     "empty" in {
       val counted = new Counted[Int]
       val result: CountedThings[Int] = counted.result
-      result.size must beEqualTo (0)
+      result.rows must have length 0
     }
 
     "apply" in {
       val counted = new Counted[Int]
       counted(42)
-      counted.result.size must beEqualTo (1)
+      counted.result.rows must have length 1
     }
+
 
     "rollup" in {
       val firstBatch = new Counted[String]
@@ -47,15 +49,15 @@ class CountedSpec extends Specification {
       strings("USB")
 
       firstBatch(strings.result)
-      firstBatch.result.size must beEqualTo (7)
+      firstBatch.result.size must equal (7)
 
-      val rows = firstBatch.result.rows
-      rows must haveSize(4)
-      rows.head.cells.head.value must beEqualTo ("CW")
-      rows.head.cells(1).value must beEqualTo ("1")
+      val rows: Seq[Row] = firstBatch.result.rows
+      rows must have length (4)
+      rows.head.cells.head.value must equal("CW")
+      rows.head.cells(1).value must equal("1")
 
-      rows(3).cells.head.value must beEqualTo ("USB")
-      rows(3).cells(1).value must beEqualTo ("4")
+      rows(3).cells.head.value must equal("USB")
+      rows(3).cells(1).value must equal("4")
 
     }
   }

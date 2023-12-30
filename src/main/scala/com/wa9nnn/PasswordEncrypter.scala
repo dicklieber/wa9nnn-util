@@ -26,6 +26,7 @@ import javax.crypto.spec.SecretKeySpec
 
 /**
  * This is useful for passwords at rest, where hashes are not appropriate.
+ * Not very secure, but avoids stooring plain-text when an app needs to use a password.
  *
  * @param secretKey usually something for a given application.
  */

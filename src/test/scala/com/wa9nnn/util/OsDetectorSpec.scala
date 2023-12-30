@@ -1,14 +1,13 @@
 package com.wa9nnn.util
 
-import org.specs2.mutable.Specification
 
-class OsDetectorSpec extends Specification {
+class OsDetectorSpec extends UtilSpec {
 
   "OsDetectorSpec" should {
     "osName" in {
-      OsDetector.windows must beFalse
-      OsDetector.macos must beTrue // util must be built on MacOs.
-      OsDetector.linux must beFalse
+      OsDetector.windows mustBe false
+      OsDetector.macos mustBe true // util must be built on MacOs.
+      OsDetector.linux mustBe false
     }
   }
 }

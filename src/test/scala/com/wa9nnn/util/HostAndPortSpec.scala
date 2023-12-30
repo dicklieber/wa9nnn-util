@@ -17,50 +17,49 @@
 
 package com.wa9nnn.util
 
-import org.specs2.mutable.Specification
 import play.api.libs.json.Json
 
-class HostAndPortSpec extends Specification {
+class HostAndPortSpec extends UtilSpec {
 
   "HostAndPort" should {
     "handle host with port" in {
       val hostAndPort = HostAndPort("www.u505.com:123", 80)
-      hostAndPort.host must beEqualTo("www.u505.com")
-      hostAndPort.port must beEqualTo(123)
+      hostAndPort.host must equal ("www.u505.com")
+      hostAndPort.port must equal (123)
     }
     "handle host with default port" in {
       val hostAndPort = HostAndPort("www.u505.com", 80)
-      hostAndPort.host must beEqualTo("www.u505.com")
-      hostAndPort.port must beEqualTo(80)
+      hostAndPort.host must equal ("www.u505.com")
+      hostAndPort.port must equal (80)
     }
     "fail with non-numeric port" in {
-      HostAndPort("www.u505.com:crap", 80) must throwAn[IllegalArgumentException]
+      an [IllegalArgumentException] should be thrownBy HostAndPort("www.u505.com:crap", 80)
     }
     "fail with empty string" in {
-      HostAndPort("", 80) must throwAn[IllegalArgumentException]
+      an [IllegalArgumentException] should be thrownBy HostAndPort("", 80)
     }
 
     "implicit toString" in {
       import com.wa9nnn.util.HostAndPort.hostAndPortToString
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
       val s: String = hostAndPort
-      s must beEqualTo("www.u505.com:123")
+      s must equal ("www.u505.com:123")
     }
 
     "socketaddress" in {
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com:123", 80)
       val address = hostAndPort.toSocketAddress
-      address.getPort must beEqualTo(123)
-      address.getHostString must beEqualTo("www.u505.com")
+      address.getPort must equal (123)
+      address.getHostString must equal ("www.u505.com")
     }
 
     "json" in {
       import com.wa9nnn.util.HostAndPort.hostAndPortFormat
       val hostAndPort: HostAndPort = HostAndPort("www.u505.com", 80)
       val pretty = Json.prettyPrint(Json.toJson(hostAndPort))
-      pretty must beEqualTo(""""www.u505.com:80"""")
+      pretty must equal (""""www.u505.com:80"""")
       val backAgain = Json.parse(pretty).as[HostAndPort]
-      backAgain must beEqualTo(hostAndPort)
+      backAgain must equal (hostAndPort)
     }
   }
 }

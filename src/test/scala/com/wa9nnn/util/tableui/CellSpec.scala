@@ -17,16 +17,17 @@
 
 package com.wa9nnn.util.tableui
 
-import org.specs2.mutable.Specification
+
+import com.wa9nnn.util.UtilSpec
 
 import java.time.Instant
 
-class CellSpec extends Specification {
+class CellSpec extends UtilSpec {
 
-  "Cell" >> {
-  "creators" >> {
-    Cell("simplestring").value must beEqualTo ("simplestring")
-    Cell(Instant.EPOCH).value must beEqualTo ("01/01/70 00:00 UTC (18:00 CST)")
-  }
+  "Cell" should {
+    "creators" in {
+      Cell("simplestring").value must equal("simplestring")
+      Cell(Instant.EPOCH).value must equal("01/01/70 00:00 UTC (18:00 CST)")
+    }
   }
 }

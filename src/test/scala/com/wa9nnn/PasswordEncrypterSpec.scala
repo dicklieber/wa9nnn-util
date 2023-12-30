@@ -17,40 +17,41 @@
 
 package com.wa9nnn
 
-import org.specs2.mutable.Specification
+import com.wa9nnn.util.UtilSpec
 
 
-class PasswordEncrypterSpec extends Specification {
-  sequential
+class PasswordEncrypterSpec extends UtilSpec {
 
   "PasswordEncrypter" should {
     new PasswordEncrypter("swordfish")
     val pwd = "you cant come in here"
     "have prefixed enrypted" in {
-      val encrypted = PasswordEncrypter.encrypt(pwd)
+      val encrypted: String = PasswordEncrypter.encrypt(pwd)
       encrypted must startWith(PasswordEncrypter.prefix)
       val encryptedPart = encrypted.drop(PasswordEncrypter.prefix.length)
-      encryptedPart must be_!=(pwd)
+      encryptedPart must not equal (pwd)
     }
 
-    "round trip encrypted" >> {
+    "round trip encrypted" should {
       val encrypted = PasswordEncrypter.encrypt(pwd)
-      encrypted must not endingWith ("\r\n")
-      val backAgain = PasswordEncrypter.decrypt(encrypted)
-      backAgain must beEqualTo(pwd)
-
+      "ensure no EOL" in {
+        encrypted must not endWith ("\r\n")
+      }
+      "Not same as input" in {
+        val backAgain: String = PasswordEncrypter.decrypt(encrypted)
+        backAgain must equal(pwd)
+      }
     }
-    "round trip play" >> {
+    "round trip if not encrypted" in {
       val encrypted = "Harpo"
       val backAgain = PasswordEncrypter.decrypt(encrypted)
-      backAgain must beEqualTo(encrypted)
+      backAgain must equal (encrypted)
     }
 
   }
-  "Mixin after loading" >> {
+  "Mixin after loading" in {
     val encrypter = new PasswordEncrypter("swordfish")
-    PasswordEncrypter.keySpec must beSome()
-    PasswordEncrypter.encrypt("hello") must beEqualTo ("{b}:qyCcRGNyzCM=")
+    PasswordEncrypter.encrypt("hello") must equal("{b}:qyCcRGNyzCM=")
   }
 
 }

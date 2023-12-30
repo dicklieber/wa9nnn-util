@@ -17,7 +17,10 @@
 
 package com.wa9nnn.util
 
-import java.time.{Duration, Instant}
+import com.wa9nnn.util.DurationHelpers.between
+
+import java.time.Instant
+
 
 /**
  *
@@ -31,7 +34,7 @@ class AgeColor(rangeValues: Seq[(Int, String)] = AgeColor.defaultMapping) {
   }
 
   def apply(instant: Instant): String = {
-    val ageInSeconds = Duration.between(instant, Instant.now).getSeconds.toInt
+    val ageInSeconds: Int = between(instant, Instant.now).toSeconds.toInt
     if (ageInSeconds < 0) {
       segments.head._2
     }
@@ -46,7 +49,7 @@ object AgeColor {
 
   def apply(rangeValues: Seq[(Int, String)] = defaultMapping): AgeColor = new AgeColor(rangeValues)
 
-  private  val prefix: String = "age"
+  private val prefix: String = "age"
   /**
    * Mapping seconds old to css classes.
    */
