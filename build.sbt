@@ -18,12 +18,9 @@ lazy val `util` = (project in file("."))
     ),
     //    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion, git.gitCurrentTags, git.gitCurrentBranch),
     buildInfoPackage := "com.wa9nnn.util",
-    //    githubOwner := "dicklieber",
-    //    githubRepository := "util",
     versionScheme := Some("early-semver")
   )
 
-//https://github.com/djspiewak/sbt-github-packages
 
 
 Compile / scalacOptions ++= Seq("-verbose", "-Ymacro-annotations")

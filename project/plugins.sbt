@@ -17,7 +17,5 @@ addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
 
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.3.0")
 
-//addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.3")
-
 addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.0.3")
 
