@@ -14,8 +14,8 @@
 project/project
 /target/
 /logs/
-/src/main/scala/com/wa9nnn/util/.idea/codeStyles/codeStyleConfig.xml
-/src/main/scala/com/wa9nnn/util/.idea/codeStyles/Project.xml
-/src/main/scala/com/wa9nnn/util/.idea/misc.xml
-/src/main/scala/com/wa9nnn/util/.idea/modules.xml
-/src/main/scala/com/wa9nnn/util/.idea/vcs.xml
+/src/main/scala/com/wa9nnn/wa9nnnutil/.idea/codeStyles/codeStyleConfig.xml
+/src/main/scala/com/wa9nnn/wa9nnnutil/.idea/codeStyles/Project.xml
+/src/main/scala/com/wa9nnn/wa9nnnutil/.idea/misc.xml
+/src/main/scala/com/wa9nnn/wa9nnnutil/.idea/modules.xml
+/src/main/scala/com/wa9nnn/wa9nnnutil/.idea/vcs.xml

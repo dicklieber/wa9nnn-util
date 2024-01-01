@@ -1,0 +1,29 @@
+@import com.wa9nnn.wa9nnnutil.tableui.html._
+@import play.twirl.api.TwirlFeatureImports._
+@import com.wa9nnn.wa9nnnutil.tableui.html.renderTableBodyRows
+
+@(uiTable: com.wa9nnn.wa9nnnutil.tableui.Table)
+<table
+    @attribute("id", uiTable.id)
+    @attributes("class", uiTable.cssClass)
+        >
+    <thead>
+    @for(chRow <- uiTable.columnHeaders) {
+        <tr>
+        @for(cell <- chRow) {
+            <th
+                @span( cell.colSpan, cell.rowSpan)
+                @attribute("title", cell.tooltip)
+                @attribute("style", cell.style)
+                @attributes("class", cell.cssClass)
+            >@(cell.value)
+            </th>
+        }
+        </tr>
+    }
+    </thead>
+        <tbody>
+    @renderTableBodyRows(uiTable.rows)
+</tbody>
+</table>
+

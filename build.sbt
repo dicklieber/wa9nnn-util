@@ -1,7 +1,7 @@
 import sbt.Credentials
 
-name := "util"
-organization := "net.wa9nnn"
+name := "wa9nnnutil"
+organization := "com.wa9nnn"
 organizationHomepage := Some(url("http:/www.wa9nnn.com"))
 
 

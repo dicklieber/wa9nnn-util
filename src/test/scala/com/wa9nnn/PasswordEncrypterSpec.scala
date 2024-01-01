@@ -17,7 +17,7 @@
 
 package com.wa9nnn
 
-import com.wa9nnn.util.UtilSpec
+import com.wa9nnn.wa9nnnutil.UtilSpec
 
 
 class PasswordEncrypterSpec extends UtilSpec {

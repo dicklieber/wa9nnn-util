@@ -1,0 +1,50 @@
+@import com.wa9nnn.wa9nnnutil.tableui.Row
+@import com.wa9nnn.wa9nnnutil.tableui.html._
+@import play.twirl.api.TwirlFeatureImports._
+
+@(rows: Seq[Row])
+@for(row <- rows) {
+    <tr
+        @attributes("class", row.cssClass)
+        @attribute("id", row.rowId)
+        @attribute("title", row.rowToolTip)
+    >
+    @for(cell <- row.cells) {
+        <td
+            @attributes("class", cell.cssClass)
+            @attribute("id", cell.id)
+            @attribute("name", cell.name)
+            @attribute("title", cell.tooltip)
+            @span(cell.colSpan, cell.rowSpan)
+
+        >
+        @if(cell.href.isDefined) {
+            @defining(cell.href.get) { link =>
+                @if(cell.image.nonEmpty) {
+                    <a href="@(link.url)" @if(link.target.nonEmpty) {
+                        target="@link.target"}><img src="@(cell.image.head)"></a>
+                } else {
+                    <a href="@(link.url)" @if(link.target.nonEmpty) {
+                        target="@link.target"}>@(cell.value)</a>
+                }
+            }
+        } else {
+            @if(cell.button) {
+                <button class="@(cell.button.get)">@(cell.value)</button>
+            } else {
+                @if(cell.rawHtml) {
+                    @Html(cell.value)
+                } else {
+                    @if(cell.image.nonEmpty) {
+                        @for(image ← cell.image) {
+                            <img src="@(image)">
+                            }
+                    } else {
+                        @(cell.value)
+                    }
+                }
+            }
+        } </td>
+    }
+    </tr>
+}
