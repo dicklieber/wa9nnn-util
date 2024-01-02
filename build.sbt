@@ -57,7 +57,6 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
  * }}}
  */
 
-publishTo := Some(("Reposilite Repository" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
 
 publishTo := {
   val url = "https://my.artifact.repo.net/"
