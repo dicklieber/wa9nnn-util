@@ -59,7 +59,7 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
 
 
 publishTo := {
-  val url = "http://repo.wa9nnn.tech:8080/"
+  val url = "http://repo.wa9nnn.tech:8080"
   if (isSnapshot.value)
     Some(("Reposilite Repository" at s"$url/snapshots").withAllowInsecureProtocol(true))
   else
