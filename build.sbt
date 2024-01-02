@@ -23,7 +23,7 @@ lazy val `util` = (project in file("."))
 
 
 
-Compile / scalacOptions ++= Seq("-verbose", "-Ymacro-annotations")
+Compile / scalacOptions ++= Seq("-verbose")
 
 libraryDependencies ++= Seq(
   "org.scalactic" %% "scalactic" % "3.2.17",
@@ -45,8 +45,24 @@ resolvers += ("Reposilite" at "http://127.0.0.1:8080/releases").withAllowInsecur
 //  ("Reposilite=" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true)
 //  ("ReposiliteXYZZY" at "http://repo.wa9nnn.net:8080/releases").withAllowInsecureProtocol(true)
 
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials-reposilite")
+credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
 
-//publishTo := Some(("ReposilitePLUGH" at "http://repo.wa9nnn.net:8080/releases").withAllowInsecureProtocol(true))
-publishTo := Some(("Reposilite" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
+/**
+ * The file is like:
+ * {{{
+ * realm=Reposilite   // Must be this as it's what reposilite authenticate with.
+ * host=127.0.0.1     // Nogte no port1!
+ * user=publisher     // token name in reposilite.
+ * password=xxxx      // secret for the reposilite user.
+ * }}}
+ */
 
+publishTo := Some(("Reposilite Repository" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
+
+publishTo := {
+  val url = "https://my.artifact.repo.net/"
+  if (isSnapshot.value)
+    Some(("Reposilite Repository" at "http://127.0.0.1:8080/snapshots").withAllowInsecureProtocol(true))
+  else
+    Some(("Reposilite Repository" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
+}
