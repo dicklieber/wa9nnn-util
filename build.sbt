@@ -59,9 +59,9 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
 
 
 publishTo := {
-  val url = "https://my.artifact.repo.net/"
+  val url = "http://repo.wa9nnn.tech:8080/"
   if (isSnapshot.value)
-    Some(("Reposilite Repository" at "http://127.0.0.1:8080/snapshots").withAllowInsecureProtocol(true))
+    Some(("Reposilite Repository" at s"$url/snapshots").withAllowInsecureProtocol(true))
   else
-    Some(("Reposilite Repository" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true))
+    Some(("Reposilite Repository" at "s$url/releases").withAllowInsecureProtocol(true))
 }
