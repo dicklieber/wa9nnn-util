@@ -22,7 +22,6 @@ lazy val `util` = (project in file("."))
   )
 
 
-
 Compile / scalacOptions ++= Seq("-verbose")
 
 libraryDependencies ++= Seq(
@@ -59,9 +58,8 @@ credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
 
 
 publishTo := {
-  val url = "http://repo.wa9nnn.tech:8080"
   if (isSnapshot.value)
-    Some(("Reposilite Repository" at s"$url/snapshots").withAllowInsecureProtocol(true))
+    Some(("Reposilite Repository" at "http://repo.wa9nnn.tech:8080/snapshots").withAllowInsecureProtocol(true))
   else
-    Some(("Reposilite Repository" at "s$url/releases").withAllowInsecureProtocol(true))
+    Some(("Reposilite Repository" at "http://repo.wa9nnn.tech:8080/releases").withAllowInsecureProtocol(true))
 }
