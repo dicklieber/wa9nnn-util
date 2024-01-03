@@ -28,11 +28,44 @@ package com.wa9nnn.wa9nnnutil.tableui
  */
 case class Table(headers: Seq[Seq[Any]], rows: Seq[Row], id: Option[String] = None, cssClass: Seq[String] = Seq("headeredTable")) {
 
+  lazy val cols: Int = headers
+    .lastOption // are there headers
+    .map(_.length) // how long is the last one.
+    .getOrElse(0) // 0 if not header
   val columnHeaders: Seq[Seq[Cell]] = headers.map(hw => hw.map(Cell(_)))
 
   def withId(id: String): Table = copy(id = Option(id))
 
   def withCssClass(css: String): Table = copy(cssClass = cssClass.appended(css))
+
+  /**
+   * Add rows to this table with a header
+   *
+   * @param newRows
+   * @return
+   */
+  def appendRows(newRows: Seq[Row]): Table =
+    copy(rows =
+      rows.appendedAll(newRows)
+    )
+
+  /**
+   * Add rows to this table with a header
+   * This may not correctly set the colspan of the section headers corredtly it the lat row o the header '
+   * doesn't match the length of [[Cell]]s in the new [[Rows]]s.
+   *
+   * @param sectionName full with <td class="sectionHeader> element.
+   * @param newRows     to follow the section header.
+   * @return a new [[Table]].
+   */
+  def appendSection(sectionName: String, newRows: Seq[Row]): Table =
+    val sectionHeaderRow = Row(Seq(Cell(sectionName)
+      .withCssClass("sectionHeader")
+      .withColSpan(cols))
+    )
+    copy(rows =
+      rows.appendedAll(newRows.prepended(sectionHeaderRow))
+    )
 
 }
 

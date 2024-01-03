@@ -27,20 +27,18 @@ import java.time.Instant
 class renderTableSpec extends UtilSpec {
 
   "renderTableSpec" should {
+    import com.wa9nnn.wa9nnnutil.tableui.Header.s2cell
+    val header = Header("Overall", "Alpha", "Beta", "Charlie")
+
+    val rows = Seq(
+      Row("Row1", "a string", Cell(Instant.EPOCH))
+    )
+
+    val table = Table(header, rows)
+
     "render" in {
-      import com.wa9nnn.wa9nnnutil.tableui.Header.s2cell
-      val header = Header("Overall", "Alpha", "Beta", "Charlie")
-
-      val rows = Seq(
-        Row("Row1", "a string", Cell(Instant.EPOCH))
-      )
-
-      val table = Table(header, rows)
 
       val html = TableRenderer(table)
-
-      val path = Paths.get("renderhtml.html")
-      Files.writeString(path, html)
       html must equal("""<table class="headeredTable">
                             | <thead>
                             |  <tr>
@@ -60,6 +58,39 @@ class renderTableSpec extends UtilSpec {
                             |  </tr>
                             | </tbody>
                             |</table>""".stripMargin.replaceAll("\n" , " \n"))
+    }
+    "append section" in {
+      val appendedTable: Table = table.appendSection("New Section", Seq(Row.ofAny("newRow0","newRow1","newRow2")))
+      val html: String = TableRenderer(appendedTable)
+      html must equal(
+        """<table class="headeredTable">
+          | <thead>
+          |  <tr>
+          |   <th colspan="3" class="sorter-false">Overall </th>
+          |  </tr>
+          |  <tr>
+          |   <th>Alpha </th>
+          |   <th>Beta </th>
+          |   <th>Charlie </th>
+          |  </tr>
+          | </thead>
+          | <tbody>
+          |  <tr>
+          |   <td> Row1 </td>
+          |   <td> a string </td>
+          |   <td class="number"> 01/01/70 00:00 UTC (18:00 CST) </td>
+          |  </tr>
+          |  <tr>
+          |   <td class="sectionHeader" colspan="3"> New Section </td>
+          |  </tr>
+          |  <tr>
+          |   <td> newRow0 </td>
+          |   <td> newRow1 </td>
+          |   <td> newRow2 </td>
+          |  </tr>
+          | </tbody>
+          |</table>""".stripMargin.replaceAll("\n", " \n"))
+
     }
   }
 }
