@@ -32,7 +32,7 @@ object MultiColumn {
    * @param max        number of columns, number of rows will be determined automatically.
    * @return
    */
-  def organize(items: Seq[Cell], max: Int, emptyCell: Cell = Cell("")): Seq[Seq[Cell]] = {
+  def organize(items: Seq[Any], max: Int, emptyCell: Cell = Cell("")): Seq[Seq[Cell]] = {
     if (items.isEmpty) {
       Seq.empty
     } else {
@@ -47,7 +47,7 @@ object MultiColumn {
         }
       }
 
-      val grid: Seq[Seq[Cell]] = items.grouped(columnHeight).toSeq
+      val grid: Seq[Seq[Any]] = items.grouped(columnHeight).toSeq
       val nRows = grid.head.length
       val nCols = grid.length
       for {
@@ -59,7 +59,7 @@ object MultiColumn {
         }
           yield {
             try {
-              column(iRow)
+              Cell(column(iRow))
             } catch {
               case _: Exception =>
                 emptyCell
@@ -81,7 +81,7 @@ object MultiColumn {
    * @param noDataMessage show this if there are no items.
    * @return table
    */
-  def apply(items: Seq[Cell], max: Int, header: String = "", emptyCell: Cell = Cell(""), noDataMessage: String = "No data available yet!"): Table = {
+  def apply(items: Seq[Any], max: Int, header: String = "", emptyCell: Cell = Cell(""), noDataMessage: String = "No data available yet!"): Table = {
     if (items.isEmpty) {
       Table(List.empty, Row(noDataMessage))
     } else {
