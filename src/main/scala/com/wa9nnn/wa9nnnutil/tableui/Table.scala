@@ -71,6 +71,15 @@ case class Table(headers: Seq[Seq[Any]], rows: Seq[Row], id: Option[String] = No
 
 object Table {
   /**
+   * Build an empty table with tjust a single line header.
+   *
+   * @param header
+   * @return table with this a header.
+   */
+  def empty(header: String): Table =
+    new Table(Seq(Seq(header)), Seq.empty, cssClass = Seq("emptyTable"))
+
+  /**
    * A single row of column headers
    * Note because of Java Type erasure this ctor can't also use [[Seq]] for the headers, so [[List]] allows
    * the scala compiler to differentiate between the main ctor and the auxiliary ctor.
