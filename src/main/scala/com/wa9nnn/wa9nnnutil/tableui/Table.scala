@@ -24,9 +24,8 @@ package com.wa9nnn.wa9nnnutil.tableui
  * @param headers  zero or more rows of column headers [[Cell]]s that makeup the <thead>
  * @param rows     in the <tbody>
  * @param cssClass class of table element.
- * @param sideCar  something extra that view may be able to use.
  */
-case class Table(headers: Seq[Seq[Any]], rows: Seq[Row], id: Option[String] = None, cssClass: Seq[String] = Seq("headeredTable")) {
+case class Table(headers: Seq[Seq[Cell]], rows: Seq[Row], id: Option[String] = None, cssClass: Seq[String] = Seq("headeredTable")) {
 
   lazy val cols: Int = headers
     .lastOption // are there headers
@@ -58,16 +57,17 @@ case class Table(headers: Seq[Seq[Any]], rows: Seq[Row], id: Option[String] = No
    * @param newRows     to follow the section header.
    * @return a new [[Table]].
    */
-  def appendSection(sectionName: String, newRows: Seq[Row]): Table =
-    val sectionHeaderRow = Row(Seq(Cell(sectionName)
+  def appendSection(tableSection: TableSection): Table =
+    val sectionHeaderRow = Row(Seq(Cell(tableSection.sectionName)
       .withCssClass("sectionHeader")
       .withColSpan(cols))
     )
     copy(rows =
-      rows.appendedAll(newRows.prepended(sectionHeaderRow))
+      rows.appendedAll(tableSection.newRows.prepended(sectionHeaderRow))
     )
-
 }
+
+
 
 object Table {
   /**
@@ -77,7 +77,7 @@ object Table {
    * @return table with this a header.
    */
   def empty(header: String): Table =
-    new Table(Seq(Seq(header)), Seq.empty, cssClass = Seq("emptyTable"))
+    new Table(Seq(Seq(Cell(header))), Seq.empty, cssClass = Seq("emptyTable"))
 
   /**
    * A single row of column headers
@@ -118,18 +118,46 @@ object Table {
    * A multi line header
    *
    * {{
-   * new UiTable(
+   * Table(
    * Header("fullspan", "colA", "colB", "colC"),
-   * UiRow("a", "b", "c")),
-   * UiRow("aa", "bb", "cc"))
+   * Row("a", "b", "c")),
+   * Row("aa", "bb", "cc"))
    * }}
    *
    * @param header a [[Header]]
    * @param rows   <tbody>
    */
-  def apply(header: Header, rows: Seq[Row]): Table = {
-    Table(header.rows, rows)
+  def apply(header: Header, rows: Seq[RowSectionOrKV]): Table = {
+    val rowBuilder = Seq.newBuilder[Row]
+    rows.foreach {
+      case r: Row =>
+        rowBuilder += r
+
+      case (name: String, value: Any) =>
+        rowBuilder += Row(Seq(Cell(name), Cell(value)))
+
+      case t: TableSection =>
+        val cell = Cell(t.sectionName)
+          .withColSpan(t.newRows.length)
+        rowBuilder += Row(Seq(cell))
+
+        t.newRows.foreach {
+          (r: Row | TableSection | (String, Any)) =>
+            r match {
+              case r: Row =>
+                rowBuilder += r
+              case t2: Tuple2[String, Any] =>
+                rowBuilder += Row(t2)
+              case ts: TableSection =>
+                throw new IllegalArgumentException("Cna't nest Table Sections.")
+            }
+
+            rowBuilder
+        }
+    }
+
+    Table(header.rows, rowBuilder.result())
   }
 
-
+  type RowSectionOrKV = Row | TableSection | (String, Any)
 }

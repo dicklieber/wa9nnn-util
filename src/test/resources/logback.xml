@@ -43,10 +43,10 @@
     </appender>
 
     <logger name="play" level="INFO" />
-    <logger name="application" level="DEBUG" />
+    <logger name="application" level="INFO" />
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
-   <logger name="com.wa9nnn.PasswordEncrypter" level="TRACE"/>
+   <logger name="com.wa9nnn.PasswordEncrypter" level="OFF"/>
 
     <root level="TRACE">
         <appender-ref ref="ASYNCFILE" />

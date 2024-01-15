@@ -52,11 +52,12 @@ case class Row(cells: Seq[Cell],
   def :+(in: Any): Row = {
     copy(cells = cells :+ Cell(in))
   }
+
   /**
    * Append a cell to this row if not None
    *
    * @param maybeIn to be appended. If this is a [[Cell]] it is appended.
-   *           If any other type, a new [[Cell]] will be created with the value.
+   *                If any other type, a new [[Cell]] will be created with the value.
    * @return a new UiRow with additional cell.
    */
   def addOption(maybeIn: Option[Any]): Row = {
@@ -93,6 +94,9 @@ object Row {
     Row(headerCell +: subsiquentCells)
   }
 
+  def apply(t:Tuple2[String, Any]): Row =
+    Row(t._1, t._2)
+
   /**
    *
    * @param headerCell  leftmost column in row.
@@ -118,7 +122,7 @@ object Row {
     new Row(r)
   }
 
-  def ofAny(any:Any*):Row = {
+  def ofAny(any: Any*): Row = {
     Row(
       any.map(Cell(_))
     )
