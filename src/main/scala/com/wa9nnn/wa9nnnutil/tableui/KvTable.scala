@@ -25,19 +25,25 @@ object KvTable:
    * @param kv     any number of (String,Any) or [[TableSection]]s.
    * @return the table
    */
-  def apply(header: String, kv: TableSection | (String, Any)*): Table =
+  def apply(header: String, kv: (TableSection | (String, Any) | Row)*): Table =
     val builder = Seq.newBuilder[Row]
     kv.foreach {
-      case section: TableSection =>
-        builder += Row(Seq(Cell(section.sectionName).withColSpan(2).withCssClass("sectionHeader")))
-        section.newRows.foreach { r =>
-          builder += r
+      case tableSection: TableSection =>
+        builder += Row(Seq(Cell(tableSection.sectionName).withColSpan(2).withCssClass("sectionHeader")))
+        tableSection.newRows.foreach { r =>
+          r match
+            case r: Row =>
+              builder += r
+            case kv: Tuple2[String, Any] =>
+              builder += Row(kv)
         }
+
+      case row: Row =>
+        builder += row
 
       case (name: String, value: Any) =>
         builder += Row.ofAny(name, value)
     }
-
 
     Table(Seq(Seq(Cell(header).withColSpan(2))), builder.result())
 
@@ -50,10 +56,15 @@ object KvTable:
   def apply(kv: TableSection | (String, Any)*): Table =
     val builder = Seq.newBuilder[Row]
     kv.foreach {
-      case section: TableSection =>
-        builder += Row(Seq(Cell(section.sectionName).withColSpan(2).withCssClass("sectionHeader")))
-        section.newRows.foreach { r =>
-          builder += r
+      case tableSection: TableSection =>
+        builder += Row(Seq(Cell(tableSection.sectionName).withColSpan(2).withCssClass("sectionHeader")))
+        tableSection.newRows.foreach { r =>
+          val x: Row =  r match
+            case r: Row =>
+              r
+            case kv: (String, Any) =>
+              Row(kv)
+          builder += x
         }
 
       case (name: String, value: Any) =>

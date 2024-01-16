@@ -17,26 +17,20 @@
 
 package com.wa9nnn.wa9nnnutil.tableui
 
-case class TableSection(sectionName: String, newRows: Seq[Row]):
-  def toRows: Seq[Row] = {
-    val cols = newRows.headOption.map(_.cells.length).getOrElse(1)
-    val sectionHeaderRow = Cell(sectionName).withColSpan(cols)
-    Row(Seq(sectionHeaderRow)) +: newRows
-  }
+import com.wa9nnn.wa9nnnutil.tableui.Header.s2cell
 
-object TableSection:
-  /**
-   * Create a new [[TableSection]] using rows or [[Tuple2]]
-   *
-   * @param sectionName header for section
-   * @param rows        [[Row]] or "Name" -> 42
-   */
-  def create(sectionName: String, rows: RowOrKV*): TableSection =
-    TableSection(sectionName, rows.map {
-      case r: Row =>
-        r
-      case (name: String, value: Any) =>
-        Row(name, value)
-    }
-    )
-  type RowOrKV = Row | (String, Any)
+
+case class TableSection(sectionName: String, newRows: (Row | (String, Any))*):
+  lazy val rows: Seq[Row] =
+    Row(Seq(Cell(sectionName)
+      .withCssClass("sectionHeader")
+      .withColSpan(2))) +:
+      newRows.map {
+        {
+          case r: Row =>
+            r
+          case (name: String, value: Any) =>
+            Row(name, Cell(value))
+
+        }
+      }

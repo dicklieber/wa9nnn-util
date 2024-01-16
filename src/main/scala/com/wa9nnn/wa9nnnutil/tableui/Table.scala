@@ -63,7 +63,7 @@ case class Table(headers: Seq[Seq[Cell]], rows: Seq[Row], id: Option[String] = N
       .withColSpan(cols))
     )
     copy(rows =
-      rows.appendedAll(tableSection.newRows.prepended(sectionHeaderRow))
+      rows.appendedAll(tableSection.rows)
     )
 }
 
