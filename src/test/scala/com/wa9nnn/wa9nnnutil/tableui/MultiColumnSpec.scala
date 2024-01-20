@@ -6,9 +6,6 @@ import com.wa9nnn.wa9nnnutil.{UtilSpec, tableui}
 
 class MultiColumnSpec extends UtilSpec  {
 
-  
-  
-  
   val expected100: String =
     """0 10 20 30 40 50 60 70 80 90
       |1 11 21 31 41 51 61 71 81 91
@@ -108,7 +105,7 @@ class MultiColumnSpec extends UtilSpec  {
     val equals: Boolean = grid == expected
     println(s"nItems: $nItems grid: $grid expected: $expected  eq: $equals  $$$$\n")
 //    val r: MatchResult[String] = grid must equal(expected)
-  "grid" must equal("grid")
+    grid must equal("grid")
 
   }
 }

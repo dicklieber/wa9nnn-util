@@ -23,8 +23,8 @@ class TableSectionTest extends UtilSpec {
 
   "TableSectionTest" should {
     "create" when {
-      val tableSection = TableSection("name", Row.ofAny("hh", 42), "kv" -> 23.00)
-      val rows = tableSection.toRows
+      val tableSection: TableSection = KvTableSection("name", Row.ofAny("hh", 42), "kv" -> 23.00)
+      val rows = tableSection.rows
       "header" in {
         val headerCell = rows.head.cells.head
         headerCell.value mustBe ("name")

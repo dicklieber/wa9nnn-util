@@ -17,8 +17,21 @@
 
 package com.wa9nnn.wa9nnnutil.tableui
 
-import com.wa9nnn.wa9nnnutil.tableui.Header.s2cell
+import com.wa9nnn.wa9nnnutil.UtilSpec
 
-trait TableSection:
-  def rows:Seq[Row]
+class KvTableSectionTest extends UtilSpec {
 
+  "KvTableSectionTest" should {
+    val tableSection:TableSection = KvTableSection("header",
+      "zero" -> 0,
+      Row("r1", 1),
+    )
+    "rows" in {
+      tableSection.rows must have length(3)
+      val headerCells = tableSection.rows.head.cells
+      headerCells must have length(1)
+      headerCells.head.colSpan mustBe 2
+      headerCells.head.cssClass.head mustBe ("sectionHeader")
+    }
+  }
+}

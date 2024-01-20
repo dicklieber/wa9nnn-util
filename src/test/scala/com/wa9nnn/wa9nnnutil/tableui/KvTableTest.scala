@@ -25,10 +25,10 @@ class KvTableTest extends UtilSpec {
     "with header" in {
       val table: Table = KvTable("Header",
         "kv" -> "kv value",
-        TableSection("SectionHeader", Seq(
+        KvTableSection("SectionHeader",
           Row("row0", 0),
-          Row("row1", 1),
-        ))
+          "row1" -> 1
+        )
       )
 
       table.cssClass.head mustBe "headeredTable"
@@ -41,10 +41,10 @@ class KvTableTest extends UtilSpec {
     "without header" in {
       val table: Table = KvTable(
         "kv" -> "kv value",
-        TableSection("SectionHeader", Seq(
+        KvTableSection("SectionHeader",
           Row("row0", 0),
-          Row("row1", 1),
-        ))
+          "row1" -> 1
+        )
       )
 
       table.cssClass.head mustBe "headeredTable"

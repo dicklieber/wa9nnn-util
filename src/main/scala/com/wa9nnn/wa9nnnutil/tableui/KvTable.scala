@@ -29,14 +29,7 @@ object KvTable:
     val builder = Seq.newBuilder[Row]
     kv.foreach {
       case tableSection: TableSection =>
-        builder += Row(Seq(Cell(tableSection.sectionName).withColSpan(2).withCssClass("sectionHeader")))
-        tableSection.newRows.foreach { r =>
-          r match
-            case r: Row =>
-              builder += r
-            case kv: Tuple2[String, Any] =>
-              builder += Row(kv)
-        }
+        builder ++= tableSection.rows
 
       case row: Row =>
         builder += row
@@ -54,23 +47,14 @@ object KvTable:
    * @return the table
    */
   def apply(kv: TableSection | (String, Any)*): Table =
+
     val builder = Seq.newBuilder[Row]
     kv.foreach {
       case tableSection: TableSection =>
-        builder += Row(Seq(Cell(tableSection.sectionName).withColSpan(2).withCssClass("sectionHeader")))
-        tableSection.newRows.foreach { r =>
-          val x: Row =  r match
-            case r: Row =>
-              r
-            case kv: (String, Any) =>
-              Row(kv)
-          builder += x
-        }
+        builder ++= tableSection.rows
 
       case (name: String, value: Any) =>
         builder += Row.ofAny(name, value)
     }
 
-
     Table(Seq.empty, builder.result())
-

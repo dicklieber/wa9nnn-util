@@ -37,36 +37,35 @@ case class Table(headers: Seq[Seq[Cell]], rows: Seq[Row], id: Option[String] = N
 
   def withCssClass(css: String): Table = copy(cssClass = cssClass.appended(css))
 
-  /**
-   * Add rows to this table with a header
-   *
-   * @param newRows
-   * @return
-   */
-  def appendRows(newRows: Seq[Row]): Table =
+
+  def append(newRows: Seq[Row]): Table =
     copy(rows =
       rows.appendedAll(newRows)
     )
 
-  /**
-   * Add rows to this table with a header
-   * This may not correctly set the colspan of the section headers corredtly it the lat row o the header '
-   * doesn't match the length of [[Cell]]s in the new [[Rows]]s.
-   *
-   * @param sectionName full with <td class="sectionHeader> element.
-   * @param newRows     to follow the section header.
-   * @return a new [[Table]].
-   */
-  def appendSection(tableSection: TableSection): Table =
-    val sectionHeaderRow = Row(Seq(Cell(tableSection.sectionName)
-      .withCssClass("sectionHeader")
-      .withColSpan(cols))
-    )
+  def append(tableSection: TableSection): Table =
     copy(rows =
       rows.appendedAll(tableSection.rows)
     )
-}
 
+  //  /**
+  //   * Add rows to this table with a header
+  //   * This may not correctly set the colspan of the section headers corredtly it the lat row o the header '
+  //   * doesn't match the length of [[Cell]]s in the new [[Rows]]s.
+  //   *
+  //   * @param sectionName full with <td class="sectionHeader> element.
+  //   * @param newRows     to follow the section header.
+  //   * @return a new [[Table]].
+  //   */
+  //  def appendSection(tableSection: TableSection): Table =
+  //    val sectionHeaderRow = Row(Seq(Cell(tableSection.sectionName)
+  //      .withCssClass("sectionHeader")
+  //      .withColSpan(cols))
+  //    )
+  //    copy(rows =
+  //      rows.appendedAll(tableSection.rows)
+  //    )
+}
 
 
 object Table {
@@ -137,23 +136,7 @@ object Table {
         rowBuilder += Row(Seq(Cell(name), Cell(value)))
 
       case t: TableSection =>
-        val cell = Cell(t.sectionName)
-          .withColSpan(t.newRows.length)
-        rowBuilder += Row(Seq(cell))
-
-        t.newRows.foreach {
-          (r: Row | TableSection | (String, Any)) =>
-            r match {
-              case r: Row =>
-                rowBuilder += r
-              case t2: Tuple2[String, Any] =>
-                rowBuilder += Row(t2)
-              case ts: TableSection =>
-                throw new IllegalArgumentException("Cna't nest Table Sections.")
-            }
-
-            rowBuilder
-        }
+        rowBuilder ++= t.rows
     }
 
     Table(header.rows, rowBuilder.result())

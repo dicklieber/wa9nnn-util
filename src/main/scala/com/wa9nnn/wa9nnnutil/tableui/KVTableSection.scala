@@ -17,8 +17,19 @@
 
 package com.wa9nnn.wa9nnnutil.tableui
 
-import com.wa9nnn.wa9nnnutil.tableui.Header.s2cell
+import scala.collection.+:
 
-trait TableSection:
-  def rows:Seq[Row]
+case class KvTableSection(sectionName: String, newRows: (Row | (String, Any))*) extends TableSection:
+  lazy val rows: Seq[Row] =
+    Row(Seq(Cell(sectionName)
+      .withCssClass("sectionHeader")
+      .withColSpan(2))) +:
+      newRows.map {
+        {
+          case r: Row =>
+            r
+          case (name: String, value: Any) =>
+            Row(name, Cell(value))
 
+        }
+      }

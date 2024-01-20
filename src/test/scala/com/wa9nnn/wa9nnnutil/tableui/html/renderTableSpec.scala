@@ -19,7 +19,7 @@ package com.wa9nnn.wa9nnnutil.tableui.html
 
 import com.wa9nnn.wa9nnnutil.UtilSpec
 import com.wa9nnn.wa9nnnutil.tableui.Header.singleRow
-import com.wa9nnn.wa9nnnutil.tableui.{Cell, Header, Row, Table, TableRenderer, TableSection}
+import com.wa9nnn.wa9nnnutil.tableui.{Cell, Header, KvTableSection, Row, Table, TableRenderer, TableSection}
 
 import java.nio.file.{Files, Paths}
 import java.time.Instant
@@ -60,8 +60,8 @@ class renderTableSpec extends UtilSpec {
                             |</table>""".stripMargin.replaceAll("\n" , " \n"))
     }
     "append section" in {
-      val ts = TableSection("New Section", Seq(Row.ofAny("newRow0","newRow1","newRow2")))
-      val appendedTable: Table = table.appendSection(ts)
+      val ts = KvTableSection("New Section", Row.ofAny("newRow0","newRow1","newRow2"))
+      val appendedTable: Table = table.append(ts)
       val html: String = TableRenderer(appendedTable)
       html must equal(
         """<table class="headeredTable">
