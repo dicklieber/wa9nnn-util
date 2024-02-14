@@ -1,8 +1,8 @@
-import sbt.Credentials
+
 
 name := "wa9nnnutil"
-organization := "com.wa9nnn"
-organizationHomepage := Some(url("http:/www.wa9nnn.com"))
+//organization := "com.wa9nnn"
+//organizationHomepage := Some(url("https://github.com/dicklieber/wa9nnn-util"))
 
 
 scalaVersion := "3.3.1"
@@ -40,26 +40,6 @@ libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.11.0"
 
 )
-resolvers += ("Reposilite" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true)
-//  ("Reposilite=" at "http://127.0.0.1:8080/releases").withAllowInsecureProtocol(true)
-//  ("ReposiliteXYZZY" at "http://repo.wa9nnn.net:8080/releases").withAllowInsecureProtocol(true)
 
-credentials += Credentials(Path.userHome / ".sbt" / "credentials-reposilite")
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
 
-/**
- * The file is like:
- * {{{
- * realm=Reposilite   // Must be this as it's what reposilite authenticate with.
- * host=127.0.0.1     // Nogte no port1!
- * user=publisher     // token name in reposilite.
- * password=xxxx      // secret for the reposilite user.
- * }}}
- */
-
-
-publishTo := {
-  if (isSnapshot.value)
-    Some(("Reposilite Repository" at "http://repo.wa9nnn.tech:8080/snapshots").withAllowInsecureProtocol(true))
-  else
-    Some(("Reposilite Repository" at "http://repo.wa9nnn.tech:8080/releases").withAllowInsecureProtocol(true))
-}
