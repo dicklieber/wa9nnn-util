@@ -1,4 +1,4 @@
-import sbt.Keys.organization
+import sbt.Keys.{developers, organization}
 
 val homePage = "https://github.com/dicklieber/wa9nnn-util"
 ThisBuild / organization := "com.wa9nnn"
@@ -7,7 +7,7 @@ ThisBuild / organizationHomepage := Some(url(homePage))
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
-    url(homePage),
+    url("https://github.com/dicklieber/wa9nnn-util"),
     "git@github.com:dicklieber/wa9nnn-util.git"
   )
 )
