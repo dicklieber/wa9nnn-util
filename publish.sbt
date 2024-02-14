@@ -37,3 +37,4 @@ ThisBuild / publishTo := {
 ThisBuild / publishMavenStyle := true
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
+skipStaging := true
