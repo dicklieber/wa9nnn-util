@@ -27,7 +27,7 @@ class MultiColumnSpec extends UtilSpec  {
       |6 16 26 36 46 56 66 76 86 96
       |7 17 27 37 47 57 67 77 87 97
       |8 18 28 38 48 58 68 78 88 98
-      |9 19 29 39 49 59 69 79 89 -""".stripMargin
+      |9 19 29 39 49 59 69 79 89 """.stripMargin
 
 
   "Organize" should {
@@ -52,15 +52,15 @@ class MultiColumnSpec extends UtilSpec  {
       gridCheck(101,
         """0 11 22 33 44 55 66 77 88 99
           |1 12 23 34 45 56 67 78 89 100
-          |2 13 24 35 46 57 68 79 90 -
-          |3 14 25 36 47 58 69 80 91 -
-          |4 15 26 37 48 59 70 81 92 -
-          |5 16 27 38 49 60 71 82 93 -
-          |6 17 28 39 50 61 72 83 94 -
-          |7 18 29 40 51 62 73 84 95 -
-          |8 19 30 41 52 63 74 85 96 -
-          |9 20 31 42 53 64 75 86 97 -
-          |10 21 32 43 54 65 76 87 98 -""".stripMargin)
+          |2 13 24 35 46 57 68 79 90 
+          |3 14 25 36 47 58 69 80 91 
+          |4 15 26 37 48 59 70 81 92 
+          |5 16 27 38 49 60 71 82 93 
+          |6 17 28 39 50 61 72 83 94 
+          |7 18 29 40 51 62 73 84 95 
+          |8 19 30 41 52 63 74 85 96 
+          |9 20 31 42 53 64 75 86 97 
+          |10 21 32 43 54 65 76 87 98 """.stripMargin)
     }
 
   }
@@ -103,9 +103,7 @@ class MultiColumnSpec extends UtilSpec  {
       row.map(_.toString).mkString(" ")
     }.mkString("\n")
     val equals: Boolean = grid == expected
-    println(s"nItems: $nItems grid: $grid expected: $expected  eq: $equals  $$$$\n")
-//    val r: MatchResult[String] = grid must equal(expected)
-    grid must equal("grid")
+    grid mustEqual  expected
 
   }
 }

@@ -82,7 +82,7 @@ class renderTableSpec extends UtilSpec {
           |   <td class="number"> 01/01/70 00:00 UTC (18:00 CST) </td>
           |  </tr>
           |  <tr>
-          |   <td class="sectionHeader" colspan="3"> New Section </td>
+          |   <td class="sectionHeader" colspan="2"> New Section </td>
           |  </tr>
           |  <tr>
           |   <td> newRow0 </td>
