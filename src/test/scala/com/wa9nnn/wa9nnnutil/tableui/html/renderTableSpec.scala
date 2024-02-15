@@ -40,24 +40,24 @@ class renderTableSpec extends UtilSpec {
 
       val html = TableRenderer(table)
       html must equal("""<table class="headeredTable">
-                            | <thead>
-                            |  <tr>
-                            |   <th colspan="3" class="sorter-false">Overall </th>
-                            |  </tr>
-                            |  <tr>
-                            |   <th>Alpha </th>
-                            |   <th>Beta </th>
-                            |   <th>Charlie </th>
-                            |  </tr>
-                            | </thead>
-                            | <tbody>
-                            |  <tr>
-                            |   <td> Row1 </td>
-                            |   <td> a string </td>
-                            |   <td class="number"> 01/01/70 00:00 UTC (18:00 CST) </td>
-                            |  </tr>
-                            | </tbody>
-                            |</table>""".stripMargin.replaceAll("\n" , " \n"))
+                        | <thead>
+                        |  <tr>
+                        |   <th colspan="3" class="sorter-false">Overall</th>
+                        |  </tr>
+                        |  <tr>
+                        |   <th>Alpha</th>
+                        |   <th>Beta</th>
+                        |   <th>Charlie</th>
+                        |  </tr>
+                        | </thead>
+                        | <tbody>
+                        |  <tr>
+                        |   <td>Row1</td>
+                        |   <td>a string</td>
+                        |   <td class="number">01/01/70 00:00 UTC (18:00 CST)</td>
+                        |  </tr>
+                        | </tbody>
+                        |</table>""".stripMargin)
     }
     "append section" in {
       val ts = KvTableSection("New Section", Row.ofAny("newRow0","newRow1","newRow2"))
@@ -67,30 +67,30 @@ class renderTableSpec extends UtilSpec {
         """<table class="headeredTable">
           | <thead>
           |  <tr>
-          |   <th colspan="3" class="sorter-false">Overall </th>
+          |   <th colspan="3" class="sorter-false">Overall</th>
           |  </tr>
           |  <tr>
-          |   <th>Alpha </th>
-          |   <th>Beta </th>
-          |   <th>Charlie </th>
+          |   <th>Alpha</th>
+          |   <th>Beta</th>
+          |   <th>Charlie</th>
           |  </tr>
           | </thead>
           | <tbody>
           |  <tr>
-          |   <td> Row1 </td>
-          |   <td> a string </td>
-          |   <td class="number"> 01/01/70 00:00 UTC (18:00 CST) </td>
+          |   <td>Row1</td>
+          |   <td>a string</td>
+          |   <td class="number">01/01/70 00:00 UTC (18:00 CST)</td>
           |  </tr>
           |  <tr>
-          |   <td class="sectionHeader" colspan="2"> New Section </td>
+          |   <td class="sectionHeader" colspan="2">New Section</td>
           |  </tr>
           |  <tr>
-          |   <td> newRow0 </td>
-          |   <td> newRow1 </td>
-          |   <td> newRow2 </td>
+          |   <td>newRow0</td>
+          |   <td>newRow1</td>
+          |   <td>newRow2</td>
           |  </tr>
           | </tbody>
-          |</table>""".stripMargin.replaceAll("\n", " \n"))
+          |</table>""".stripMargin)
 
     }
   }

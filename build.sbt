@@ -23,18 +23,18 @@ lazy val `util` = (project in file("."))
 
 
 Compile / scalacOptions ++= Seq("-verbose")
-
+val logbackVersion = "1.4.14"
 libraryDependencies ++= Seq(
-  "org.scalactic" %% "scalactic" % "3.2.17",
+  "org.scalactic" %% "scalactic" % "3.2.17"  % "test",
   "org.scalatest" %% "scalatest" % "3.2.17" % "test",
   "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % "test",
 
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
-  "org.jsoup" % "jsoup" % "1.13.1",
+  "org.jsoup" % "jsoup" % "1.17.2",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4",
-  "ch.qos.logback" % "logback-classic" % "1.4.7",
-  "ch.qos.logback" % "logback-classic" % "1.4.7",
-  "ch.qos.logback" % "logback-core" % "1.4.7",
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
+  "ch.qos.logback" % "logback-classic" % logbackVersion,
+  "ch.qos.logback" % "logback-core" % logbackVersion,
   "com.typesafe.play" %% "twirl-api" % "1.6.0-RC4",
   "com.typesafe.play" %% "play-json" % "2.10.0-RC9",
   "commons-io" % "commons-io" % "2.11.0"
