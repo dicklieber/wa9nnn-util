@@ -54,7 +54,7 @@ class renderTableSpec extends UtilSpec {
                         |  <tr>
                         |   <td>Row1</td>
                         |   <td>a string</td>
-                        |   <td class="number">01/01/70 00:00 UTC (18:00 CST)</td>
+                        |   <td class="tableNumber">01/01/70 00:00 UTC (18:00 CST)</td>
                         |  </tr>
                         | </tbody>
                         |</table>""".stripMargin)
@@ -63,6 +63,7 @@ class renderTableSpec extends UtilSpec {
       val ts = KvTableSection("New Section", Row.ofAny("newRow0","newRow1","newRow2"))
       val appendedTable: Table = table.append(ts)
       val html: String = TableRenderer(appendedTable)
+
       html must equal(
         """<table class="headeredTable">
           | <thead>
@@ -79,7 +80,7 @@ class renderTableSpec extends UtilSpec {
           |  <tr>
           |   <td>Row1</td>
           |   <td>a string</td>
-          |   <td class="number">01/01/70 00:00 UTC (18:00 CST)</td>
+          |   <td class="tableNumber">01/01/70 00:00 UTC (18:00 CST)</td>
           |  </tr>
           |  <tr>
           |   <td class="sectionHeader" colspan="2">New Section</td>

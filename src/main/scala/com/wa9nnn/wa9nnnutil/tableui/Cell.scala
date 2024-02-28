@@ -152,6 +152,8 @@ case class Cell(value: String,
 }
 
 object Cell {
+  private val numberClass = "tableNumber"
+
   /**
    * Create a [[Row]] [[Cell]].
    *
@@ -171,7 +173,7 @@ object Cell {
           new Cell(s)
         case duration: Duration =>
           new Cell(duration)
-            .withCssClass("number")
+            .withCssClass(numberClass)
         case instant: Instant =>
           (instant match {
             case Instant.MIN =>
@@ -180,13 +182,13 @@ object Cell {
               new Cell("\u03C9")
             case ok =>
               new Cell(TimeConverters.instantDisplayUTCLocal(ok))
-          }).withCssClass("number")
+          }).withCssClass(numberClass)
         case i: Int =>
-          new Cell(java.text.NumberFormat.getIntegerInstance.format(i), cssClass = Seq("number"))
+          new Cell(java.text.NumberFormat.getIntegerInstance.format(i), cssClass = Seq(numberClass))
         case d: Double =>
           number(d, 1)
         case l: Long =>
-          new Cell(java.text.NumberFormat.getIntegerInstance.format(l), cssClass = Seq("number"))
+          new Cell(java.text.NumberFormat.getIntegerInstance.format(l), cssClass = Seq(numberClass))
         case tableCell: Cell => // already a [[Cell]] use as is.
           tableCell
         case exception: Exception =>
@@ -207,7 +209,7 @@ object Cell {
     val decimalFormat: DecimalFormat = new DecimalFormat()
     decimalFormat.setMinimumFractionDigits(decimals)
 
-    new Cell(decimalFormat.format(value), cssClass = Seq("number")).withCssClass("number")
+    new Cell(decimalFormat.format(value), cssClass = Seq(numberClass)).withCssClass(numberClass)
   }
 
   /**
