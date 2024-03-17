@@ -39,7 +39,7 @@ class KvTableTest extends UtilSpec {
       rows must have length 4
     }
     "without header" in {
-      val table: Table = KvTable(
+      val table: Table = KvTable.noHeader(
         "kv" -> "kv value",
         KvTableSection("SectionHeader",
           Row("row0", 0),

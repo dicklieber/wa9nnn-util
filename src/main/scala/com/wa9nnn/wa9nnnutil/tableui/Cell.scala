@@ -27,7 +27,6 @@ import DurationHelpers.given
 
 import scala.concurrent.duration.Duration
 
-
 /**
  * One cell in a row of a table
  *
@@ -44,7 +43,6 @@ import scala.concurrent.duration.Duration
  *                 But this is handy for age color e.g. s"background-color:$${ageValue.color}"
  * @param rawHtml  if true value will be cell contents with no escaping.
  */
-
 
 case class Cell(value: String,
                 id: Option[String] = None,
@@ -98,7 +96,6 @@ case class Cell(value: String,
     copy(image = imageUrls.map(_.toExternalForm))
   }
 
-
   /**
    * @param cssClass to be added.
    * @return copy of the TableCell with cssClass appended to any existing cssClasses.
@@ -118,7 +115,6 @@ case class Cell(value: String,
   def withStyle(style: String): Cell =
     copy(style = Some(style))
 
-
   def asColoredAge(stamp: Instant, ageColor: AgeColor = AgeColor.defaultAgeColor): Cell = {
     copy(value = between(stamp)).withCssClass(ageColor.apply(stamp))
   }
@@ -136,7 +132,6 @@ case class Cell(value: String,
 
   def withToolTip(toolTip: String): Cell =
     copy(tooltip = Option(toolTip))
-
 
   /**
    * @param tc contents of a [[Cell]] to be appended to this [[Cell]] and collected into a [[Row]]
@@ -191,6 +186,8 @@ object Cell {
           new Cell(java.text.NumberFormat.getIntegerInstance.format(l), cssClass = Seq(numberClass))
         case tableCell: Cell => // already a [[Cell]] use as is.
           tableCell
+        case table: Table =>
+          TableInACell(table)
         case exception: Exception =>
           val renderedStackTrace = ExceptionRenderer(exception)
           new Cell(exception.getMessage).withCssClass("errorCell").withToolTip(renderedStackTrace)
@@ -221,7 +218,6 @@ object Cell {
     new Cell(html, rawHtml = true)
   }
 }
-
 
 /**
  *

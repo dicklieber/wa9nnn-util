@@ -21,11 +21,11 @@ object KvTable:
   /**
    * Simple table with two columns and a header.
    *
-   * @param header top line <th>
+   * @param sHeader top line <th>
    * @param kv     any number of (String,Any) or [[TableSection]]s.
    * @return the table
    */
-  def apply(header: String, kv: (TableSection | (String, Any) | Row)*): Table =
+  def apply(sHeader: String, kv: (TableSection | (String, Any) | Row)*): Table =
     val builder = Seq.newBuilder[Row]
     kv.foreach {
       case tableSection: TableSection =>
@@ -37,8 +37,18 @@ object KvTable:
       case (name: String, value: Any) =>
         builder += Row.ofAny(name, value)
     }
+    val header: Header =
+      if (sHeader.isEmpty)
+        Header.none
+      else {
+        val cell = Cell(sHeader).withColSpan(2)
+        Header(Seq(Seq(cell)))
+      }
 
-    Table(Seq(Seq(Cell(header).withColSpan(2))), builder.result())
+    Table(header, builder.result())
+
+  def inACell(kv: (TableSection | (String, Any) | Row)*):Cell =
+    TableInACell(noHeader(kv:_*))
 
   /**
    * Simple table with two columns and no header.
@@ -46,15 +56,5 @@ object KvTable:
    * @param kv     any number of (String,Any) or [[TableSection]]s.
    * @return the table
    */
-  def apply(kv: TableSection | (String, Any)*): Table =
-
-    val builder = Seq.newBuilder[Row]
-    kv.foreach {
-      case tableSection: TableSection =>
-        builder ++= tableSection.rows
-
-      case (name: String, value: Any) =>
-        builder += Row.ofAny(name, value)
-    }
-
-    Table(Seq.empty, builder.result())
+  def noHeader(kv: (TableSection | (String, Any) | Row)*): Table =
+    KvTable.apply("", kv:_*)

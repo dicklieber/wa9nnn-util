@@ -21,23 +21,22 @@ package com.wa9nnn.wa9nnnutil.tableui
 
 import scala.language.implicitConversions
 
-
 /**
  * Builds a Seq[Seq[TableCell
  * use apply methods for useful construction.
  *
  * @param rows header rows.
  */
-case class Header(rows: Seq[Seq[Cell]] = Seq.empty) {
-  def append(headerRow:Seq[Any]):Header = {
+case class Header(rows: Seq[Seq[Cell]] = Seq.empty):
+  def append(headerRow: Seq[Any]): Header = {
     copy(rows = rows.appended(headerRow.map(Cell(_))))
   }
-}
 
-object Header {
-  def singleRow(cols:Any*) :Header = {
+object Header :
+  def singleRow(cols: Any*): Header = {
     new Header(Seq(cols.map(Cell(_))))
   }
+
   /**
    *
    * @param allColHeader top row header that will span all subheaders
@@ -53,7 +52,7 @@ object Header {
     ))
   }
 
+  implicit def s2cell(s: String): Cell = Cell(s)
 
-  implicit def s2cell(s:String):Cell = Cell(s)
+  val none: Header = Header(Seq.empty)
 
-}
